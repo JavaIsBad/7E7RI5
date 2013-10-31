@@ -1,20 +1,36 @@
 public abstract class Piece{
-	
-	 // c'est pas tres tres orienté objet tout ce que j'ai fait, mais comme j'ai fait ça assez rapido, j'ai dis fuck
-	 // et je l'ai fait :p
-	public piece(){
-	}
-	abstract public modifierPiece(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4){ // modifier une piece
-	}
-	abstract public void dessinerPiece(Matrice m){ // dessine la piece sur m
-	}
-	abstract public void effacerPiece(Matrice m){ // efface la piece
-	}
-	abstract public void tomberPiece(Matrice m){ //on fait descendre tous les y
-	}
-	abstract public void rotationner(Matrice m){ //que des rotations vers la gauche
-	}
-	
+    /**
+     * Dessine la pièce sur la matrice de jeu
+     * @param m La matrice de jeu
+     */
+    public abstract void dessinerPiece(Matrice m);
+
+    /**
+     * Efface la pièce de la matrice de jeu
+     * @param m La matrice de jeu
+     */
+    public abstract void effacerPiece(Matrice m);
+
+    /**
+     * Fait descendre la pièce dans le jeu
+     */
+    public abstract void tomberPiece();
+
+    /**
+     * Effectue une rotation de la pièce dans le jeu
+     */
+    public abstract void rotationner();
+
+    /*
+     * Renvoit les positions occupées par la pièce en x
+     * @return Les positions de la pièce en x
+     */
+    public abstract int[] getX();
+    /*
+     * Renvoit les positions occupées par la pièce en y
+     * @return Les positions de la pièce en y
+     */
+    public abstract int[] getY();
 
 
 }
