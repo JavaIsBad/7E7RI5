@@ -1,0 +1,22 @@
+Diagramme UML : 
+Classe :
+
+IA :
+=>Faire un gros tableau 20x10? et regarder les lignes par lignes pour voir ou il manque des cases? qu'il faut remplir? Mais dans ce cas la, ça ne sera que du ligne par ligne
+=>On essaie de lui fait faire des tetris? C'est chaud quand même
+=>On met des points? Il y a des points anyway! c'est dans le sujet
+
+
+JEU : on mets le lancement du jeu dedans
+PIECES : Toutes les pieces dans la même classe avec la classe abstraite Piece?
+ECRAN : on mets l'écran du jeu avec un tableau?
+GESTIONPIECE : gestion de la piece en cours et de la suivante? 
+gere pour faire les rotations et tout et tout?
+GESTIONEVNTEXTERIEUR : On rajoutes d'autres petits elements caucasse? genre DES FLAMMES PIMP! ou des minijeux?
+Pour l'animation, frame par frame? => un truc qui se recharge tous les X?
+
+Pour modeliser les formes, on pet utiliser Java2D, elle contient tout pour faire un truc en 2D!
+
+On respecte le sujet cette fois!
+
+
