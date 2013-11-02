@@ -43,7 +43,6 @@ public class Piece4Inv extends Piece{
     
 	 /**
      * Fait tomber la pièce de 1 vers le bas
-     * @return Renvoit 1 si c'est possible et 0 sinon (arrivé en bas du jeu)
      */
     public void tomberPiece(){
             for(int i=0; i<y.length; i++)
