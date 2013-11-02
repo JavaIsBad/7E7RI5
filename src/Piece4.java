@@ -65,16 +65,16 @@ public class Piece4 extends Piece{
      */
     public void rotationner(){
         if(rotation){ // déjà en position de rotation
-            x[1]-=1;
+            x[1]+=1;
             y[1]-=1;
-            x[2]-=1;
+            x[2]+=1;
             y[2]+=1;
             y[3]+=2;
         }
         else{
-            x[1]+=1;
+            x[1]-=1;
             y[1]+=1;
-            x[2]+=1;
+            x[2]-=1;
             y[2]-=1;
             y[3]-=2;
         }

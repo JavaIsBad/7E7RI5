@@ -21,12 +21,13 @@ public abstract class Piece{
      */
     public abstract void rotationner();
 
-    /*
+    /**
      * Renvoit les positions occupées par la pièce en x
      * @return Les positions de la pièce en x
      */
     public abstract int[] getX();
-    /*
+    
+    /**
      * Renvoit les positions occupées par la pièce en y
      * @return Les positions de la pièce en y
      */

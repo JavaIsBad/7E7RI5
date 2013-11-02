@@ -1,49 +1,67 @@
 /**
- * [ 2 ][ 1 ]
- * [ 3 ][ 4 ]
+ * [ 1 ][ 0 ]
+ * [ 2 ][ 3 ]
  */
 
 public class PieceCarre extends Piece{
-	static int x1,x2,x3,x4;
-	static int y1,y2,y3,y4;
-	static int rotate; 
-	
+	/// Les positions x et y des pièces en haut au milieu du jeu lors de leur apparition (permet de réinitialiser la position lorque la pièce à déjà fini sa course vers le bas)
+    private int xMid[]=new int[4], yMid[]=new int[4];
+    /// La position actuel dans le jeu
+    private int x[]=new int[4], y[]=new int[4];
+    /// Indique dans quel état de rotation la pièce se trouve (ici que 1 possible)
+    private boolean rotation;
+    
 	public pieceCarre(){
+		initPosition(m);
+        rotation=false;
 	}
-	public pieceCarre(int x1, int y1){
-	}
-	public modifierPiece(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4){
-		this.x1=x1;
-		this.y1=y1;
-		this.x2=x2;
-		this.y2=y2;
-		this.x3=x3;
-		this.y3=y3;
-		this.x4=x3;
-		this.y4=y3;
-	}
+	
+	 private void initPosition(Matrice m){
+        int mid= m.sizeX/2;
+        xMid[0]=mid;
+        yMid[0]=0;
+        xMid[1]=mid-1;
+        yMid[1]=0;
+        xMid[2]=mid-1;
+        yMid[2]=1;
+        xMid[3]=mid;
+        yMid[3]=1;
+    }
+    
 	public void dessinerPiece(Matrice m){
-		if (x1 >= 0 && x1 <= 8 && x2 >= 0 && x2 <= 8 && x3 >= 0 && x3 <= 8 && x4 >= 0 && x4 <= 8 &&
-		y1 >= 0 && y1 <= 20 && y2 >= 0 && y2 <= 20 && y3 >= 0 && y3 <= 20 && y4 >= 0 && y4 <= 20 &&){
-		m.put(x1,y1,true);
-		m.put(x2,y2,true);
-		m.put(x3,y3,true);
-		m.put(x4,y4,true);
-		}
+		       for(int i=0; i<x.length; i++)
+            m.put(x[i],y[i],true);
 	}
+	
 	public void effacerPiece(Matrice m){
-		m.put(x1,y1,false);
-		m.put(x2,y2,false);
-		m.put(x3,y3,false);
-		m.put(x4,y4,false);
+		for(int i=0; i<x.length; i++)
+            m.put(x[i],y[i],false);
 	}
-	public void tomberPiece(Matrice m){
-		if (y1 <= 19 && y2 <= 19 && y3 <= 19 && y4 <= 19){
-		effacerPiece(m);
-		modifierPiece(x1,y1+1,x2,y2+1,x3,y3+1,x4,y4+1);
-		dessinerPiece(m);
+	
+	public void tomberPiece(){
+            for(int i=0; i<y.length; i++)
+                y[i]+=1;
+    }
+    
+    
+	public void rotationner(){ 
 	}
+	
+	public void antirotation(){
 	}
-	public void rotationner(Matrice m){ 
-	}
+	
+	 public void reinit(){
+        for(int i=0; i<x.length; i++){
+            x[i]=xMid[i];
+            y[i]=yMid[i];
+        }
+    }
+
+    public int[] getX(){
+        return x;
+    }
+
+    public int[] getY(){
+        return y;
+    }
 }
