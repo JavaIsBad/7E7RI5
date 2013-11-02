@@ -48,6 +48,16 @@ public class PieceI extends Piece{
                 y[i]+=1;
     }
 	
+	public void gauche(){
+			for (int i=0; i<x.length; i++)
+				x[i]-=1;
+	}
+	
+	public void droite(){
+		for (int i=0; i<x.length; i++)
+				x[i]+=1;
+	}
+ 
 	public void rotationner(){
         if(rotation){ // déjà en position de rotation
             x[1]+=1;

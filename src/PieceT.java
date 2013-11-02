@@ -17,6 +17,7 @@ public class PieceT extends Piece{
 		initPosition(m);
         rotation=0;
 	}
+	
 	 private void initPosition(Matrice m){
         int mid= m.sizeX/2;
         xMid[0]=mid;
@@ -28,7 +29,8 @@ public class PieceT extends Piece{
         xMid[3]=mid-1;
         yMid[3]=1;
     }
-public void dessinerPiece(Matrice m){
+    
+	public void dessinerPiece(Matrice m){
 		  for(int i=0; i<x.length; i++)
             m.put(x[i],y[i],true);
 	}
@@ -43,6 +45,16 @@ public void dessinerPiece(Matrice m){
                 y[i]+=1;
     }
     
+    public void gauche(){
+			for (int i=0; i<x.length; i++)
+				x[i]-=1;
+	}
+	
+	public void droite(){
+		for (int i=0; i<x.length; i++)
+				x[i]+=1;
+	}
+ 
 	public void rotationner(){ 
 	switch(rotation){
 		case 0 :

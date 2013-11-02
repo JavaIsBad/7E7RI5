@@ -15,6 +15,16 @@ public abstract class Piece{
      * Fait descendre la pièce dans le jeu
      */
     public abstract void tomberPiece();
+    
+    /**
+     * Bouge la pièce d'un cran vers la gauche
+     */
+    public abstract void gauche();
+    
+    /**
+     * Bouge la pièce d'un cran vers la droite
+     */
+    public abstract void droite();
 
     /**
      * Effectue une rotation de la pièce dans le jeu

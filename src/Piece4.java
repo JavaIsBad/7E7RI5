@@ -50,18 +50,21 @@ public class Piece4 extends Piece{
             m.put(x[i],y[i],false);
     }
 
-    /**
-     * Fait tomber la pièce de 1 vers le bas
-     */
-
     public void tomberPiece(){
             for(int i=0; i<y.length; i++)
                 y[i]+=1;
     }
 
-    /**
-     * Fait une rotation de la pièce
-     */
+	public void gauche(){
+			for (int i=0; i<x.length; i++)
+				x[i]-=1;
+	}
+	
+	public void droite(){
+		for (int i=0; i<x.length; i++)
+				x[i]+=1;
+	}
+ 
     public void rotationner(){
         if(rotation){ // déjà en position de rotation
             x[1]+=1;

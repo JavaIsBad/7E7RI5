@@ -40,4 +40,16 @@ class Matrice extends UnicastRemoteObject implements MatriceInterface {
     {
 	return matrice[x][y];
     }
+    
+   public boolean aAtteintLeBas(Piece p){
+   }
+   
+   public boolean collisionRotation(Piece p){
+   }
+   
+   public boolean collisionGauche(Piece p){
+   }
+   
+   public boolean collisionDroite(Piece p){
+   }
 }
