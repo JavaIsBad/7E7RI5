@@ -124,5 +124,16 @@ class tetris {
         });
 
     }
+    public boolean aAtteintLeBas(Piece p){
+   }
+   
+   public boolean collisionRotation(Piece p){
+   }
+   
+   public boolean collisionGauche(Piece p){
+   }
+   
+   public boolean collisionDroite(Piece p){
+   }
 }
 
