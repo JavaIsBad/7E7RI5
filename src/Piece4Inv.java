@@ -14,9 +14,9 @@ public class Piece4Inv extends Piece{
     /// Indique dans quel état de rotation la pièce se trouve (ici que 2 possible)
     private boolean rotation;
 	
-	public piece4Inv(){
+	public Piece4Inv(Matrice m){
 		initPosition(m);
-        rotation=false;
+        rotation=true;
     }
     
     private void initPosition(Matrice m){

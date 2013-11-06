@@ -3,9 +3,9 @@
  * [ 1 ][ 0 ]
  *
  * rotation autour du 0 :
- *     [ 1 ]
- *     [ 0 ][ 2 ]
- *          [ 3 ]
+ * [ 3 ]
+ * [ 2 ][ 0 ]
+ *      [ 1 ]
  *
  *          On fait les testes de rotation et descente dans tetris le jeu ici osef
  *          sa permet de faire des tests générique et non 1 pour chaque pièce
@@ -25,7 +25,7 @@ public class Piece4 extends Piece{
 
     public Piece4(Matrice m){
         initPosition(m);
-        rotation=false;
+        rotation=true;
     }
 
     private void initPosition(Matrice m){
@@ -56,34 +56,34 @@ public class Piece4 extends Piece{
      */
 
     public void tomberPiece(){
-            for(int i=0; i<y.length; i++)
-                y[i]+=1;
+        for(int i=0; i<y.length; i++)
+            y[i]+=1;
     }
 
-	public void gauche(){
-			for (int i=0; i<x.length; i++)
-				x[i]-=1;
-	}
-	
-	public void droite(){
-		for (int i=0; i<x.length; i++)
-				x[i]+=1;
-	}
- 
+    public void gauche(){
+        for (int i=0; i<x.length; i++)
+            x[i]-=1;
+    }
+
+    public void droite(){
+        for (int i=0; i<x.length; i++)
+            x[i]+=1;
+    }
+
     public void rotationner(){
         if(rotation){ // déjà en position de rotation
             x[1]+=1;
-            y[1]-=1;
-            x[2]+=1;
+            y[1]+=1;
+            x[2]-=1;
             y[2]+=1;
-            y[3]+=2;
+            x[3]-=2;
         }
         else{
             x[1]-=1;
-            y[1]+=1;
-            x[2]-=1;
+            y[1]-=1;
+            x[2]+=1;
             y[2]-=1;
-            y[3]-=2;
+            x[3]+=2;
         }
         rotation=!rotation;
     }

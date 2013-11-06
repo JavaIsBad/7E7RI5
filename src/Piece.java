@@ -41,5 +41,7 @@ public abstract class Piece{
      */
     public abstract int[] getY();
 
+    public abstract void reinit();
+
 
 }
