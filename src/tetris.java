@@ -54,9 +54,14 @@ class tetris {
         pieceEnCours.tomberPiece();
         if(collision(pieceEnCours)){
             pieceEnCours.remonterPiece();
+            pieceEnCours.dessinerPiece(matrice);
+            Points+=enleverLignesRemplies();
+            itsShowTime();
         }
-        pieceEnCours.dessinerPiece(matrice);
-        draw.refresh();
+        else{
+            pieceEnCours.dessinerPiece(matrice);
+            draw.refresh();
+        }
     }
 
     public static void action_tomber(){
@@ -73,7 +78,7 @@ class tetris {
      * @param n, la ligne a faire tomber
      */
     static void descendreLigne(int n){
-        for (int i=0; i<=matrice.getX(); i++){
+        for (int i=0; i<matrice.sizeX; i++){
             matrice.put(i,n+1,matrice.get(i,n));
             matrice.put(i,n,false);
         }
@@ -84,9 +89,6 @@ class tetris {
      * @param n, la ligne à détruire
      */
     static void detruireLigne(int n){
-        for (int i=0; i<=matrice.getX(); i++){ //on enleve tous les trucs de la ligne
-            matrice.put(i,n,false);
-        }
         for (int j=n-1; j>=0;j--){ //on fait descendre toutes les cases
             descendreLigne(j);
         }
@@ -97,9 +99,8 @@ class tetris {
      */
     static boolean ligneRemplie(int n){
         boolean bool = true;
-        for (int i=0; bool && i<matrice.getX(); i++){
+        for (int i=0; bool && i<matrice.sizeX; i++)
             bool=bool && matrice.get(i,n);
-        }
         return bool;
     }
 
@@ -137,11 +138,12 @@ class tetris {
      * Si oui, les effaces, et attribue un score au coup
      * @return un entier, égal au nombre de point gagner par la personne
      */
-    public int enleverLignesRemplies(){
+    public static int enleverLignesRemplies(){
         int cpt=0;
-        for (int i=0; i<=matrice.getY(); i++){
+        for (int i=0; i<matrice.sizeY; i++){
             if (ligneRemplie(i)){
                 detruireLigne(i);
+                i--;
                 cpt++;
             }
         }
@@ -155,6 +157,20 @@ class tetris {
         for(int i=0; colli && i< x.length; i++)
             colli= colli && !(x[i]>= matrice.sizeX || x[i] < 0 || y[i] >= matrice.sizeY || y[i] < 0 || (matrice.get(x[i],y[i])));
         return !colli;
+    }
+
+    static void finDuJeu(){
+        System.out.println("Nombre de points : "+Points);
+        System.exit(0);
+    }
+
+    static void itsShowTime(){ // fonction du jeu
+            pieceEnCours=piecejeu[(int)(Math.random()*7)];
+            pieceEnCours.reinit();
+            if(collision(pieceEnCours))
+                finDuJeu();
+            pieceEnCours.dessinerPiece(matrice);
+            draw.refresh();
     }
 
     public static void main(String[] args)
@@ -174,9 +190,6 @@ class tetris {
         piecejeu[5]=new PieceT(matrice);
         piecejeu[6]=new PieceI(matrice);
 
-        for(int i=0;i<7;i++){
-            piecejeu[i].reinit();
-        }
         // Base Graphique
         JFrame f = new JFrame("TetriS");
         draw = new Draw(matrice);
@@ -184,8 +197,6 @@ class tetris {
         f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         f.pack();
         f.setVisible(true);
-        pieceEnCours=piecejeu[0];
-        pieceEnCours.dessinerPiece(matrice);
         // Clavier
         System.out.println("Début du jeu...");
 
@@ -203,6 +214,8 @@ class tetris {
             public void keyReleased(KeyEvent e) {
             }
         });
+
+        itsShowTime();
 
     }
 

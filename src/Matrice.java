@@ -40,13 +40,4 @@ class Matrice extends UnicastRemoteObject implements MatriceInterface {
     {
         return matrice[x][y];
     }
-
-    public int getX(){
-        return sizeX;
-    }
-
-    public int getY(){
-        return sizeY;
-    }
-
 }

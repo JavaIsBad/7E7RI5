@@ -2,20 +2,24 @@
  * [ 2 ][ 0 ][ 1 ] | [ 1 ]      | [ 2 ][ 0 ][ 1 ] | [ 3 ][ 2 ]
  * [ 3 ]           | [ 0 ]      | [ 3 ]           |      [ 0 ]
  *                 | [ 2 ][ 3 ] |                 |      [ 1 ]
- *             
+ *
  *  rotation 0     | rotation 1 | rotation 2      | rotation 3
  */
 
 public class PieceL extends Piece{
-    /// Les positions x et y des pièces en haut au milieu du jeu lors de leur apparition (permet de réinitialiser la position lorque la pièce à déjà fini sa course vers le bas)
-    private int xMid[]=new int[4], yMid[]=new int[4];
-    /// La position actuel dans le jeu
-    private int x[]=new int[4], y[]=new int[4];
-    /// Indique dans quel état de rotation la pièce se trouve (ici que 4 possible)
     private int rotation;
 
     public PieceL(Matrice m){
+        xMid=new int[4];
+        yMid=new int[4];
+        x=new int[4];
+        y=new int[4];
         initPosition(m);
+        rotation=0;
+    }
+
+    public void reinit(){
+        super.reinit();
         rotation=0;
     }
 
@@ -31,37 +35,7 @@ public class PieceL extends Piece{
         yMid[3]=1;
     }
 
-    public void dessinerPiece(Matrice m){
-        for(int i=0; i<x.length; i++)
-            m.put(x[i],y[i],true);
-    }
-
-    public void effacerPiece(Matrice m){
-        for(int i=0; i<x.length; i++)
-            m.put(x[i],y[i],false);
-    }
-
-
-    public void remonterPiece(){
-        for(int i=0; i<y.length; i++)
-            y[i]-=1;
-    }
-    public void tomberPiece(){
-        for(int i=0; i<y.length; i++)
-            y[i]+=1;
-    }
-
-    public void gauche(){
-        for (int i=0; i<x.length; i++)
-            x[i]-=1;
-    }
-
-    public void droite(){
-        for (int i=0; i<x.length; i++)
-            x[i]+=1;
-    }
-
-    public void rotationner(){ 
+    public void rotationner(){
         switch(rotation){
             case 0 :
                 x[1]-=1;
@@ -132,25 +106,10 @@ public class PieceL extends Piece{
                 x[3]+=2;
                 break;
         }
-        if (rotation==0) //je sais pas si le modulo marche pour la négativité
+        if (rotation==0)
             rotation=3;
         else{
             rotation-=1;
         }
-    }
-
-    public void reinit(){
-        for(int i=0; i<x.length; i++){
-            x[i]=xMid[i];
-            y[i]=yMid[i];
-        }
-    }
-
-    public int[] getX(){
-        return x;
-    }
-
-    public int[] getY(){
-        return y;
     }
 }
