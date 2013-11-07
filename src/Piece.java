@@ -15,6 +15,7 @@ public abstract class Piece{
      * Fait descendre la pièce dans le jeu
      */
     public abstract void tomberPiece();
+    public abstract void remonterPiece();
     /**
      * Bouge la pièce d'un cran vers la gauche
      */
@@ -42,6 +43,8 @@ public abstract class Piece{
     public abstract int[] getY();
 
     public abstract void reinit();
+
+    public abstract void antirotation();
 
 
 }

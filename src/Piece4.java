@@ -59,6 +59,10 @@ public class Piece4 extends Piece{
         for(int i=0; i<y.length; i++)
             y[i]+=1;
     }
+    public void remonterPiece(){
+        for(int i=0; i<y.length; i++)
+            y[i]-=1;
+    }
 
     public void gauche(){
         for (int i=0; i<x.length; i++)

@@ -19,90 +19,47 @@ class tetris {
     static int encours=0;
 
     public static void action_right()
-    { 
-        // For example
-     //   if (x<8) {
-     //       x++;
-
-     //       matrice.put(x,y,true);
-     //       matrice.put(x+1,y,true);
-     //       matrice.put(x-1,y,false);
-     //       draw.refresh();
-     //       System.err.print("0");
-     //   }
+    {
         pieceEnCours.effacerPiece(matrice);
         pieceEnCours.droite();
+        if(collision(pieceEnCours))
+            pieceEnCours.gauche();
         pieceEnCours.dessinerPiece(matrice);
         draw.refresh();
     }
 
     public static void action_left()
-    { 
-        // For example
-      //  if (x>1) {
-      //      x--;
-      //      matrice.put(x,y,true);
-      //      matrice.put(x-1,y,true);
-      //      matrice.put(x+1,y,false);
-      //      draw.refresh();
-      //      System.err.print("1");
-      //  }
+    {
         pieceEnCours.effacerPiece(matrice);
         pieceEnCours.gauche();
+        if(collision(pieceEnCours))
+            pieceEnCours.droite();
         pieceEnCours.dessinerPiece(matrice);
         draw.refresh();
     }
 
     public static void action_rotation()
-    { 
-        // For example
-      //  if (y>0) {
-      //      if (sens==1){
-      //          matrice.put(x,y,true);
-      //          matrice.put(x,y-1,true);
-      //          matrice.put(x+1,y,false);
-      //          rotate=0;
-      //      }
-      //      else if (sens==0){
-      //          matrice.put(x,y,true);
-      //          matrice.put(x,y-1,false);
-      //          matrice.put(x+1,y,true);
-      //          rotate=1;
-      //      }
-      //  }
+    {
         pieceEnCours.effacerPiece(matrice);
         pieceEnCours.rotationner();
+        if(collision(pieceEnCours))
+            pieceEnCours.antirotation();
         pieceEnCours.dessinerPiece(matrice);
         draw.refresh();
     }
 
     public static void action_fall()
-    { 
-        // For example
-      //  if (y<19) {
-      //      y++;
-      //      matrice.put(x,y,true);
-      //      draw.refresh();
-      //      System.err.print("3");
-      //  }
+    {
         pieceEnCours.effacerPiece(matrice);
         pieceEnCours.tomberPiece();
+        if(collision(pieceEnCours)){
+            pieceEnCours.remonterPiece();
+        }
         pieceEnCours.dessinerPiece(matrice);
         draw.refresh();
     }
 
     public static void action_tomber(){
-
-   //     if (y<19){
-   //         y++;
-   //         matrice.put(x,y,true);
-   //         matrice.put(x,y-1,false);
-   //         draw.refresh();
-   //         try{
-   //             Thread.sleep(1000);}
-   //         catch (InterruptedException re) {System.out.println(re) ;}
-   //         System.err.print("ça tombe");
-   //     }
         pieceEnCours.effacerPiece(matrice);
         encours=(encours+1)%7;
         pieceEnCours=piecejeu[encours];
@@ -140,9 +97,8 @@ class tetris {
      */
     static boolean ligneRemplie(int n){
         boolean bool = true;
-        for (int i=0; i<matrice.getX(); i++){
-            if (!(matrice.get(i,n)))
-                bool=false;
+        for (int i=0; bool && i<matrice.getX(); i++){
+            bool=bool && matrice.get(i,n);
         }
         return bool;
     }
@@ -192,12 +148,13 @@ class tetris {
         return compterPoints(cpt);
     }
 
-    public boolean aAtteintLeBas(Piece p){
-        return true;
-    }
-
-    public boolean collision(Piece P){
-        return true;
+    static public boolean collision(Piece P){
+        boolean colli=true;
+        int x[]=P.getX();
+        int y[]=P.getY();
+        for(int i=0; colli && i< x.length; i++)
+            colli= colli && !(x[i]>= matrice.sizeX || x[i] < 0 || y[i] >= matrice.sizeY || y[i] < 0 || (matrice.get(x[i],y[i])));
+        return !colli;
     }
 
     public static void main(String[] args)
@@ -240,7 +197,7 @@ class tetris {
                     case KeyEvent.VK_LEFT:  action_left();     break;
                     case KeyEvent.VK_UP:    action_rotation(); break;
                     case KeyEvent.VK_DOWN:  action_fall();     break;
-                    default: action_tomber(); 			break;
+                    default: action_tomber(); break;
                 }
             }
             public void keyReleased(KeyEvent e) {

@@ -40,6 +40,10 @@ public class PieceT extends Piece{
             m.put(x[i],y[i],false);
     }
 
+    public void remonterPiece(){
+        for(int i=0; i<y.length; i++)
+            y[i]-=1;
+    }
     public void tomberPiece(){
         for(int i=0; i<y.length; i++)
             y[i]+=1;
@@ -100,14 +104,23 @@ public class PieceT extends Piece{
         switch(rotation){
             case 0 :
                 x[1]-=1;
-                y[1]+=1;
-                x[2]+=1;
+                y[1]-=1;
+                x[2]-=1;
                 y[2]+=1;
-                x[3]-=1;
+                x[3]+=1;
                 y[3]-=1;
                 break;
 
             case 1 :
+                x[1]-=1;
+                y[1]+=1;
+                x[2]+=1;
+                y[2]+=1;
+                x[3]-=1;
+                y[3]-=1;
+                break;
+
+            case 2 :
                 x[1]+=1;
                 y[1]+=1;
                 x[2]+=1;
@@ -116,22 +129,13 @@ public class PieceT extends Piece{
                 y[3]+=1;
                 break;
 
-            case 2 :
+            case 3 :
                 x[1]+=1;
                 y[1]-=1;
                 x[2]-=1;
                 y[2]-=1;
                 x[3]+=1;
                 y[3]+=1;
-                break;
-
-            case 3 :
-                x[1]-=1;
-                y[1]-=1;
-                x[2]-=1;
-                y[2]+=1;
-                x[3]+=1;
-                y[3]-=1;
                 break;
         }
         if (rotation==0) //je sais pas si le modulo marche pour la négativité

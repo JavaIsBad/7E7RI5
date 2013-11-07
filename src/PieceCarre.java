@@ -38,6 +38,10 @@ public class PieceCarre extends Piece{
             m.put(x[i],y[i],false);
     }
 
+    public void remonterPiece(){
+        for(int i=0; i<y.length; i++)
+            y[i]-=1;
+    }
     public void tomberPiece(){
         for(int i=0; i<y.length; i++)
             y[i]+=1;

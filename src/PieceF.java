@@ -1,7 +1,7 @@
 /**
- * [ 1 ][ 0 ][ 2 ] |       [ 1 ] | [ 3 ]           | [ 2 ][ 3 ]
- * 			[ 3 ] |       [ 0 ] | [ 2 ][ 0 ][ 1 ] | [ 0 ]
- *                 |  [ 3 ][ 2 ] |                 | [ 1 ]
+ * [ 1 ][ 0 ][ 2 ] |      [ 2 ][ 3 ]  |  [ 3 ]              |       [ 1 ]
+ * 			[ 3 ]  |      [ 0 ]       |  [ 2 ][ 0 ][ 1 ]    |       [ 0 ]
+ * 			       |      [ 1 ]       |                     |  [ 3 ][ 2 ]
  * 
  *  rotation 0     |  rotation 1 | rotation 2      | rotation 3
  */
@@ -45,6 +45,10 @@ public class PieceF extends Piece{
             y[i]+=1;
     }
 
+    public void remonterPiece(){
+        for(int i=0; i<y.length; i++)
+            y[i]-=1;
+    }
     public void gauche(){
         for (int i=0; i<x.length; i++)
             x[i]-=1;
@@ -59,34 +63,34 @@ public class PieceF extends Piece{
         switch(rotation){
             case 0 :
                 x[1]+=1;
-                y[1]-=1;
-                x[2]-=1;
-                y[2]+=1;
-                x[3]-=2;
-                break;
-
-            case 1 :
-                x[1]+=1;
                 y[1]+=1;
                 x[2]-=1;
                 y[2]-=1;
                 y[3]-=2;
                 break;
 
-            case 2 :
-                x[1]-=1;
-                y[1]+=1;
-                x[2]+=1;
-                y[2]-=1;
-                x[3]+=2;
+            case 1 :
+                x[1]+=1;
+                y[1]-=1;
+                x[2]-=1;
+                y[2]+=1;
+                x[3]-=2;
                 break;
 
-            case 3 :
+            case 2 :
                 x[1]-=1;
                 y[1]-=1;
                 x[2]+=1;
                 y[2]+=1;
                 y[3]+=2;
+                break;
+
+            case 3 :
+                x[1]-=1;
+                y[1]+=1;
+                x[2]+=1;
+                y[2]-=1;
+                x[3]+=2;
                 break;
         }
         rotation=(rotation+1)%4;
@@ -95,11 +99,11 @@ public class PieceF extends Piece{
     public void antirotation(){ // on fait exactement l'inverse de la rotation, EZ!
         switch(rotation){
             case 0 :
-                x[1]-=1;
-                y[1]+=1;
-                x[2]+=1;
-                y[2]-=1;
-                x[3]+=2;
+                x[1]+=1;
+                y[1]-=1;
+                x[2]-=1;
+                y[2]+=1;
+                x[3]-=2;
                 break;
 
             case 1 :
@@ -111,11 +115,11 @@ public class PieceF extends Piece{
                 break;
 
             case 2 :
-                x[1]+=1;
-                y[1]-=1;
-                x[2]-=1;
-                y[2]+=1;
-                x[3]-=2;
+                x[1]-=1;
+                y[1]+=1;
+                x[2]+=1;
+                y[2]-=1;
+                x[3]+=2;
                 break;
 
             case 3 :
