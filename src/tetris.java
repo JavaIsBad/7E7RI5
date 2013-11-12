@@ -6,6 +6,9 @@ import javax.swing.*;
 // Clavier
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+//Timer
+import java.util.Timer;
+import java.util.TimerTask;
 
 class tetris {
 
@@ -13,7 +16,10 @@ class tetris {
     static Piece pieceEnCours;
     static Matrice matrice;
     static Draw draw;
-    static int Points=0;
+    static int Points=0,cptLigne;
+    static Timer timer;
+    static TimerTask task;
+    static int vitesse=1000;
 
     // useless
     static int encours=0;
@@ -41,9 +47,9 @@ class tetris {
     public static void action_rotation()
     {
         pieceEnCours.effacerPiece(matrice);
-        pieceEnCours.rotationner();
+        pieceEnCours.antirotation();
         if(collision(pieceEnCours))
-            pieceEnCours.antirotation();
+            pieceEnCours.rotationner();
         pieceEnCours.dessinerPiece(matrice);
         draw.refresh();
     }
@@ -64,13 +70,17 @@ class tetris {
         }
     }
 
-    public static void action_tomber(){
-        pieceEnCours.effacerPiece(matrice);
-        encours=(encours+1)%7;
-        pieceEnCours=piecejeu[encours];
-        pieceEnCours.dessinerPiece(matrice);
-        draw.refresh();
-    }
+	public static void action_tomber(){
+		pieceEnCours.effacerPiece(matrice);
+        do{
+			pieceEnCours.tomberPiece();
+		} while(!collision(pieceEnCours));
+		
+            pieceEnCours.remonterPiece();
+            pieceEnCours.dessinerPiece(matrice);
+            Points+=enleverLignesRemplies();
+            itsShowTime();
+	}
 
 
     /**
@@ -147,6 +157,7 @@ class tetris {
                 cpt++;
             }
         }
+        cptLigne+=cpt;
         return compterPoints(cpt);
     }
 
@@ -160,6 +171,7 @@ class tetris {
     }
 
     static void finDuJeu(){
+		System.out.println("Nombre de lignes détruites : "+cptLigne);
         System.out.println("Nombre de points : "+Points);
         System.exit(0);
     }
@@ -174,7 +186,7 @@ class tetris {
     }
 
     public static void main(String[] args)
-    {
+    {	
         // Connexion IA
         try {
             matrice = new Matrice();
@@ -197,9 +209,20 @@ class tetris {
         f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         f.pack();
         f.setVisible(true);
+        
+        //Timer
+        timer = new Timer(true);
+        timer.scheduleAtFixedRate(new TimerTask() {
+		@Override
+		public void run() {
+			action_fall();
+			}
+		}, 100, 500);
+		
+		
+        
         // Clavier
         System.out.println("Début du jeu...");
-
 
         f.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -208,7 +231,8 @@ class tetris {
                     case KeyEvent.VK_LEFT:  action_left();     break;
                     case KeyEvent.VK_UP:    action_rotation(); break;
                     case KeyEvent.VK_DOWN:  action_fall();     break;
-                    default: action_tomber(); break;
+                    case KeyEvent.VK_SPACE:  action_tomber();     break;
+                    default: break;
                 }
             }
             public void keyReleased(KeyEvent e) {
