@@ -2,6 +2,5 @@
 set -v 
 pkill rmiregistry
 pkill java
-sleep 1
 rmiregistry &
 java tetris 

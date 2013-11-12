@@ -21,9 +21,6 @@ class tetris {
     static TimerTask task;
     static int vitesse=1000;
 
-    // useless
-    static int encours=0;
-
     public static void action_right()
     {
         pieceEnCours.effacerPiece(matrice);
