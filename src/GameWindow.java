@@ -2,30 +2,34 @@ import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.io.File;
 
 public class GameWindow extends JPanel {
 
-final int taillex=320, tailley=640;
-final int taillecarrex=taillex/10, taillecarrey=tailley/20;
+    final int taillex=240, tailley=480;
+    final int taillecarrex=taillex/10, taillecarrey=tailley/20;
 
     private Matrice matrice;
+    private BufferedImage img;
 
     public void paint(Graphics g)
     { int x,y;
-	int posx=0, posy=0;
+        int posx=0, posy=0;
         super.paint(g);
+        g.drawImage(img,0,0,taillex,tailley,0,0,311,625,Color.black,null);
         for (y=0;y<20;y++) {
-		posx=0;
+            posx=0;
             for (x=0;x<10;x++) {
                 if (matrice.isSomething(x,y)) {
                     g.setColor(CouleurTetris.getCouleur(matrice.get(x,y)));
-                } else {
-                    g.setColor(Color.black);
-                }
                 g.fillRect(posx, posy, taillecarrex, taillecarrey);
-posx+=taillecarrex;
+                }
+                posx+=taillecarrex;
             }
-posy+=taillecarrey;
+            posy+=taillecarrey;
         }
     }
 
@@ -40,5 +44,10 @@ posy+=taillecarrey;
         super();
         setPreferredSize(new Dimension(taillex, tailley));
         matrice = m;
+        try{
+            img = ImageIO.read(new File("../photo.jpg"));
+        }catch (IOException ex){
+        }
     }
+
 }
