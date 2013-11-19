@@ -47,12 +47,12 @@ public class IA {
 	robot.keyRelease(k); 	        
     }
 
-    public static void display_matrice(boolean t[][])
+    public static void display_matrice(int t[][])
     {   int x,y;
 	System.out.println("Matrice vue par la IA : ");
 	for (y=0;y<20;y++) {
 	    for (x=0;x<10;x++) {
-		if (t[x][y]) {
+		if (t[x][y]!=0) {
 		    System.out.print("[]");
 		} else {
 		    System.out.print("--");
@@ -62,8 +62,8 @@ public class IA {
 	}
     }
 
-    public static boolean[][] get_matrice()
-    { boolean [][] result=null;
+    public static int[][] get_matrice()
+    { int [][] result=null;
 	try {
 	    do {
 		result = matrice.get_matrice();

@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 
-public class Draw extends JPanel {
+public class GameWindow extends JPanel {
 
 final int taillex=320, tailley=640;
 final int taillecarrex=taillex/10, taillecarrey=tailley/20;
@@ -17,8 +17,8 @@ final int taillecarrex=taillex/10, taillecarrey=tailley/20;
         for (y=0;y<20;y++) {
 		posx=0;
             for (x=0;x<10;x++) {
-                if (matrice.get(x,y)) {
-                    g.setColor(Color.red);
+                if (matrice.isSomething(x,y)) {
+                    g.setColor(CouleurTetris.getCouleur(matrice.get(x,y)));
                 } else {
                     g.setColor(Color.black);
                 }
@@ -35,7 +35,7 @@ posy+=taillecarrey;
         repaint(getVisibleRect());
     }
 
-    public Draw(Matrice m)
+    public GameWindow(Matrice m)
     {
         super();
         setPreferredSize(new Dimension(taillex, tailley));

@@ -9,12 +9,14 @@ import java.awt.event.KeyEvent;
 //Timer
 import java.util.Timer;
 import java.util.TimerTask;
+import java.awt.Color;
 
 class tetris {
 	static Piece[] piecejeu= new Piece[7];
+	static int couleurEnCours;
 	static Piece pieceEnCours;
 	static Matrice matrice;
-	static Draw draw;
+	static GameWindow draw;
 	static int Points=0,cptLigne;
 	static Timer timer=null;
 	static TimerTask task;
@@ -26,7 +28,7 @@ class tetris {
 		pieceEnCours.droite();
 		if(collision(pieceEnCours))
 			pieceEnCours.gauche();
-		pieceEnCours.dessinerPiece(matrice);
+		pieceEnCours.dessinerPiece(matrice, couleurEnCours);
 		draw.refresh();
 	}
 
@@ -36,7 +38,7 @@ class tetris {
 		pieceEnCours.gauche();
 		if(collision(pieceEnCours))
 			pieceEnCours.droite();
-		pieceEnCours.dessinerPiece(matrice);
+		pieceEnCours.dessinerPiece(matrice, couleurEnCours);
 		draw.refresh();
 	}
 
@@ -46,7 +48,7 @@ class tetris {
 		pieceEnCours.antirotation();
 		if(collision(pieceEnCours))
 			pieceEnCours.rotationner();
-		pieceEnCours.dessinerPiece(matrice);
+		pieceEnCours.dessinerPiece(matrice, couleurEnCours);
 		draw.refresh();
 	}
 
@@ -56,12 +58,12 @@ class tetris {
 		pieceEnCours.tomberPiece();
 		if(collision(pieceEnCours)){
 			pieceEnCours.remonterPiece();
-			pieceEnCours.dessinerPiece(matrice);
+			pieceEnCours.dessinerPiece(matrice, couleurEnCours);
 			Points+=enleverLignesRemplies();
 			itsShowTime();
 		}
 		else{
-			pieceEnCours.dessinerPiece(matrice);
+			pieceEnCours.dessinerPiece(matrice, couleurEnCours);
 			draw.refresh();
 		}
 	}
@@ -73,7 +75,7 @@ class tetris {
 		} while(!collision(pieceEnCours));
 
 		pieceEnCours.remonterPiece();
-		pieceEnCours.dessinerPiece(matrice);
+		pieceEnCours.dessinerPiece(matrice, couleurEnCours);
 		Points+=enleverLignesRemplies();
 		itsShowTime();
 	}
@@ -86,7 +88,7 @@ class tetris {
 	static void descendreLigne(int n){
 		for (int i=0; i<matrice.sizeX; i++){
 			matrice.put(i,n+1,matrice.get(i,n));
-			matrice.put(i,n,false);
+			matrice.put(i,n,0);
 		}
 	}
 
@@ -106,7 +108,7 @@ class tetris {
 	static boolean ligneRemplie(int n){
 		boolean bool = true;
 		for (int i=0; bool && i<matrice.sizeX; i++)
-			bool=bool && matrice.get(i,n);
+			bool=bool && matrice.isSomething(i,n);
 		return bool;
 	}
 
@@ -162,7 +164,7 @@ class tetris {
 		int x[]=P.getX();
 		int y[]=P.getY();
 		for(int i=0; colli && i< x.length; i++)
-			colli= colli && !(x[i]>= matrice.sizeX || x[i] < 0 || y[i] >= matrice.sizeY || y[i] < 0 || (matrice.get(x[i],y[i])));
+			colli= colli && !(x[i]>= matrice.sizeX || x[i] < 0 || y[i] >= matrice.sizeY || y[i] < 0 || (matrice.isSomething(x[i],y[i])));
 		return !colli;
 	}
 
@@ -174,11 +176,13 @@ class tetris {
 
 	static void itsShowTime(){ // fonction du jeu
 		int postvitesse;
-		pieceEnCours=piecejeu[(int)(Math.random()*7)];
+		int random=(int)(Math.random()*7);
+		pieceEnCours=piecejeu[random];
 		pieceEnCours.reinit();
+		couleurEnCours=random+1;
 		if(collision(pieceEnCours))
 			finDuJeu();
-		pieceEnCours.dessinerPiece(matrice);
+		pieceEnCours.dessinerPiece(matrice, couleurEnCours);
 		if(vitesse!=250){
 			vitesse=750-50*(cptLigne/10);
 		}
@@ -213,7 +217,7 @@ class tetris {
 
 		// Base Graphique
 		JFrame f = new JFrame("TetriS");
-		draw = new Draw(matrice);
+		draw = new GameWindow(matrice);
 		f.getContentPane().add(draw);
 		f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		f.pack();

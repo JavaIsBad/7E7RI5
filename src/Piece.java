@@ -13,9 +13,9 @@ public abstract class Piece{
      * Dessine la pièce sur la matrice de jeu
      * @param m La matrice de jeu
      */
-    public void dessinerPiece(Matrice m){
+    public void dessinerPiece(Matrice m, int couleur){
         for(int i=0; i<x.length; i++)
-            m.put(x[i],y[i],true);
+            m.put(x[i],y[i],couleur);
     }
 
     /**
@@ -24,7 +24,7 @@ public abstract class Piece{
      */
     public void effacerPiece(Matrice m){
         for(int i=0; i<x.length; i++)
-            m.put(x[i],y[i],false);
+            m.put(x[i],y[i],0);
     }
 
     /**
