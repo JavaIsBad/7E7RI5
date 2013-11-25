@@ -17,7 +17,7 @@ class Tetris {
         // Connexion IA
         try {
             matrice = new Matrice();
-            Naming.rebind("matr",matrice) ;
+            Naming.rebind("matrice",matrice) ;
         } catch (RemoteException re) { System.out.println(re); System.exit(42); }
         catch (MalformedURLException e) { System.out.println(e) ; System.exit(43); }
 

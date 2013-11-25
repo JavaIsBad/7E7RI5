@@ -1,7 +1,6 @@
 #!/bin/bash
+killall rmiregistry
+killall java
 ./compile
-set -v 
-pkill rmiregistry
-pkill java
 rmiregistry &
-java tetris 
+java Tetris
