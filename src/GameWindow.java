@@ -5,17 +5,17 @@ import java.awt.Dimension;
 
 public class GameWindow extends JPanel {
 
-final int taillex=320, tailley=640;
-final int taillecarrex=taillex/10, taillecarrey=tailley/20;
+    final int taillex=320, tailley=640;
+    final int taillecarrex=taillex/10, taillecarrey=tailley/20;
 
     private Matrice matrice;
 
     public void paint(Graphics g)
     { int x,y;
-	int posx=0, posy=0;
+        int posx=0, posy=0;
         super.paint(g);
         for (y=0;y<20;y++) {
-		posx=0;
+            posx=0;
             for (x=0;x<10;x++) {
                 if (matrice.isSomething(x,y)) {
                     g.setColor(CouleurTetris.getCouleur(matrice.get(x,y)));
@@ -23,9 +23,9 @@ final int taillecarrex=taillex/10, taillecarrey=tailley/20;
                     g.setColor(Color.black);
                 }
                 g.fillRect(posx, posy, taillecarrex, taillecarrey);
-posx+=taillecarrex;
+                posx+=taillecarrex;
             }
-posy+=taillecarrey;
+            posy+=taillecarrey;
         }
     }
 
