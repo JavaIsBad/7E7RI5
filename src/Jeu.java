@@ -13,6 +13,7 @@ public class Jeu {
     private Timer timer=null;
     private TimerTask task;
     private int vitesse=0;
+    private boolean pause=false;
 
     public Jeu(Piece[] pj, Matrice m, GameWindow gw){
         if(pj!=null && m!=null && gw!=null){
@@ -24,102 +25,89 @@ public class Jeu {
             System.exit(1);
     }
 
-    private synchronized void actionSynchro(int n){
-        switch(n){
-            case 0:
-                action_right_bis();
-                break;
-            case 1:
-                action_left_bis();
-                break;
-            case 2:
-                action_rotation_bis();
-                break;
-            case 3:
-                action_fall_bis();
-                break;
-            case 4:
-                action_tomber_bis();
-                break;
-        }
-    }
-
-    public void action_right(){
-        actionSynchro(0);
-    }
-
-    private void action_right_bis()
-    {
-        pieceEnCours.effacerPiece(matrice);
-        pieceEnCours.droite();
-        if(collision(pieceEnCours))
-            pieceEnCours.gauche();
-        pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-        gamewindow.refresh();
-    }
-
-    public void action_left(){
-        actionSynchro(1);
-    }
-
-    private void action_left_bis()
-    {
-        pieceEnCours.effacerPiece(matrice);
-        pieceEnCours.gauche();
-        if(collision(pieceEnCours))
-            pieceEnCours.droite();
-        pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-        gamewindow.refresh();
-    }
-
-    public void action_rotation(){
-        actionSynchro(2);
-    }
-
-    private void action_rotation_bis()
-    {
-        pieceEnCours.effacerPiece(matrice);
-        pieceEnCours.antirotation();
-        if(collision(pieceEnCours))
-            pieceEnCours.rotationner();
-        pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-        gamewindow.refresh();
-    }
-
-    public void action_fall(){
-        actionSynchro(3);
-    }
-
-    private void action_fall_bis()
-    {
-        pieceEnCours.effacerPiece(matrice);
-        pieceEnCours.tomberPiece();
-        if(collision(pieceEnCours)){
-            pieceEnCours.remonterPiece();
-            pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-            Points+=enleverLignesRemplies();
-            itsShowTime();
+    public synchronized void action_pause(){
+        if(!pause){
+            timer.cancel();
+            pause=true;
         }
         else{
+            timer=new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                public void run() {
+                    action_fall();
+                }
+            }, 100, vitesse);
+            pause=false;
+        }
+    }
+
+
+    public synchronized void action_right()
+    {
+        if(!pause){
+            pieceEnCours.effacerPiece(matrice);
+            pieceEnCours.droite();
+            if(collision(pieceEnCours))
+                pieceEnCours.gauche();
             pieceEnCours.dessinerPiece(matrice, couleurEnCours);
             gamewindow.refresh();
         }
     }
 
-    public void action_tomber(){
-        actionSynchro(4);
+    public synchronized void action_left()
+    {
+        if(!pause){
+            pieceEnCours.effacerPiece(matrice);
+            pieceEnCours.gauche();
+            if(collision(pieceEnCours))
+                pieceEnCours.droite();
+            pieceEnCours.dessinerPiece(matrice, couleurEnCours);
+            gamewindow.refresh();
+        }
     }
 
-    private void action_tomber_bis(){
-        pieceEnCours.effacerPiece(matrice);
-        do{
-            pieceEnCours.tomberPiece();
-        } while(!collision(pieceEnCours));
+    public synchronized void action_rotation()
+    {
+        if(!pause){
+            pieceEnCours.effacerPiece(matrice);
+            pieceEnCours.antirotation();
+            if(collision(pieceEnCours))
+                pieceEnCours.rotationner();
+            pieceEnCours.dessinerPiece(matrice, couleurEnCours);
+            gamewindow.refresh();
+        }
+    }
 
-        pieceEnCours.remonterPiece();
-        pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-        Points+=enleverLignesRemplies();
-        itsShowTime();
+    public synchronized void action_fall()
+    {
+        if(!pause){
+            pieceEnCours.effacerPiece(matrice);
+            pieceEnCours.tomberPiece();
+            if(collision(pieceEnCours)){
+                pieceEnCours.remonterPiece();
+                pieceEnCours.dessinerPiece(matrice, couleurEnCours);
+                Points+=enleverLignesRemplies();
+                itsShowTime();
+            }
+            else{
+                pieceEnCours.dessinerPiece(matrice, couleurEnCours);
+                gamewindow.refresh();
+            }
+        }
+    }
+
+    public synchronized void action_tomber(){
+        if(!pause){
+            pieceEnCours.effacerPiece(matrice);
+            do{
+                pieceEnCours.tomberPiece();
+            } while(!collision(pieceEnCours));
+
+            pieceEnCours.remonterPiece();
+            pieceEnCours.dessinerPiece(matrice, couleurEnCours);
+            Points+=enleverLignesRemplies();
+            itsShowTime();
+        }
     }
 
 

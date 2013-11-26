@@ -45,11 +45,12 @@ class Tetris {
         f.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
-                    case KeyEvent.VK_RIGHT: j.action_right();    break;
-                    case KeyEvent.VK_LEFT:  j.action_left();     break;
-                    case KeyEvent.VK_UP:    j.action_rotation(); break;
-                    case KeyEvent.VK_DOWN:  j.action_fall();     break;
-                    case KeyEvent.VK_SPACE:  j.action_tomber();     break;
+                    case KeyEvent.VK_RIGHT:     j.action_right();       break;
+                    case KeyEvent.VK_LEFT:      j.action_left();        break;
+                    case KeyEvent.VK_UP:        j.action_rotation();    break;
+                    case KeyEvent.VK_DOWN:      j.action_fall();        break;
+                    case KeyEvent.VK_SPACE:     j.action_tomber();      break;
+                    case KeyEvent.VK_P:         j.action_pause();       break;
                     default: break;
                 }
             }
