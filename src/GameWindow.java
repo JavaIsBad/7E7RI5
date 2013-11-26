@@ -13,8 +13,8 @@ public class GameWindow extends JPanel {
     final int taillecarrex=taillex/10, taillecarrey=tailley/20;
     final int bords=taillecarrex;
     BufferedImage background=null, piece=null;
-
     private Matrice matrice;
+    private BufferedImage img;
 
     public void paint(Graphics g)
     { int x,y;
@@ -61,4 +61,5 @@ public class GameWindow extends JPanel {
             System.exit(4012);
         }
     }
+
 }
