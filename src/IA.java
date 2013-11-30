@@ -91,7 +91,7 @@ public class IA {
 		Matrice matrice = new Matrice();
 		for (i=0;i<10;i++){
 			for (j=0; j<20 ; j++){
-				matrice.put(i,j,m?.get(i,j));
+				matrice.put(i,j,m.get(i,j));
 			}
 		}
 		return matrice;
@@ -102,9 +102,8 @@ public class IA {
 	 * @param m, une matrice
 	 * @return la piece en cours
 	 */
-	Piece depistage_Piece(matrice m){
+	Piece depistage_Piece(Matrice m){
 		int SizeX=m.sizeX/2;
-		Piece piece;
 		int i,j;
 		if (m.get(SizeX,1)>=1 && m.get(SizeX-1,1) >=1 && m.get(SizeX,0)>=1 && m.get(SizeX+1,0)>=1)
 			PieceEnCours=new Piece4(matrice);
@@ -122,10 +121,17 @@ public class IA {
 			PieceEnCours=new PieceT(matrice);
 		else PieceEnCours = null;
 			
-		return piece;
+		return PieceEnCours;
 	}
 	
-	
+	public boolean collision(Piece P){
+        boolean colli=true;
+        int x[]=P.getX();
+        int y[]=P.getY();
+        for(int i=0; colli && i< x.length; i++)
+            colli= colli && !(x[i]>= matrice.sizeX || x[i] < 0 || y[i] >= matrice.sizeY || y[i] < 0 || (matrice.isSomething(x[i],y[i])));
+        return !colli;
+    }
 	/**
 	 * Regarde si un jeu est fini
 	 * @return true si le jeu est fini, false sinon
@@ -143,7 +149,7 @@ public class IA {
 		int i;
 		int value=p.x[0];
 		for (i=1;i<p.x.length;i++){
-			if p.x[i]<value
+			if (p.x[i]<value)
 				value=p.x[i];
 			}
 		return value;
@@ -158,7 +164,7 @@ public class IA {
 		int i;
 		int value=p.x[0];
 		for (i=1;i<p.x.length;i++){
-			if p.x[i]>value
+			if (p.x[i]>value)
 				value=p.x[i];
 			}
 		return value;
@@ -170,7 +176,7 @@ public class IA {
 	 * @return un int
 	 */
 	public int rotationMax(Piece p){
-		return p.maxRotation;
+		return p.getrotation();
 	}
 	
 	/**
@@ -181,11 +187,11 @@ public class IA {
 	public void deplacer_piece(int colonne, Piece p){
 		int value = p.x[0]-colonne;
 		if (value > 0){
-			for (int i=0; i<value; i++){
+			for (int i=0; i<value; i++)
 				p.droite();
 		}
 		else if (value < 0){
-			for (int i=0; i>value ;i--){
+			for (int i=0; i>value ;i--)
 				p.gauche();
 		} 
 	}
@@ -207,9 +213,10 @@ public class IA {
 		for (i=j; i<m.sizeY;i++){
 			if (m.get(i,colonne) == 0){
 				cpt++;
-		}
+			}
+		}		
 	return cpt;
-	}
+}
 	
 	/**
 	 * Compte le nombre de trou dans une Matrice

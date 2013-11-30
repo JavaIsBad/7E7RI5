@@ -131,7 +131,7 @@ public class Jeu {
             descendreLigne(j);
         }
     }
-    /* Test si la ligne est remplie
+    /** Test si la ligne est remplie
      * @param n, la ligne a testé
      * @return true si oui, false sinon
      */

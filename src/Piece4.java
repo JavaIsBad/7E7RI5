@@ -61,4 +61,8 @@ public class Piece4 extends Piece{
         super.reinit();
         rotation=true;
     }
+    
+    public int getrotation(){
+		return maxRotation;
+	}
 }

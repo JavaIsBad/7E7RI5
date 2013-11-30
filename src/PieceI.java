@@ -61,4 +61,7 @@ public class PieceI extends Piece{
     public void antirotation(){
         rotationner(); // ici il suffit de faire une rotation pour revenir aux positions de départ
     }
+    public int getrotation(){
+		return maxRotation;
+	}
 }

@@ -95,5 +95,9 @@ public abstract class Piece{
      */
     public abstract void antirotation();
 
+	/**
+	 * renvoie le nombre maximum de rotation pour une piece
+	 */	
+	public abstract int getrotation();
 
 }

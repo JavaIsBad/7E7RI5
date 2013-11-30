@@ -121,4 +121,7 @@ public class PieceT extends Piece{
             rotation-=1;
         }
     }
+    public int getrotation(){
+		return maxRotation;
+	}
 }

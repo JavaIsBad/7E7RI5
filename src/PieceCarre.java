@@ -31,4 +31,7 @@ public class PieceCarre extends Piece{
 
     public void antirotation(){
     }
+    public int getrotation(){
+		return maxRotation;
+	}
 }
