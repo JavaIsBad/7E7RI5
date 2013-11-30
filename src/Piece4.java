@@ -12,6 +12,7 @@
 public class Piece4 extends Piece{
     /// Indique dans quel état de rotation la pièce se trouve (ici que 2 possible)
     private boolean rotation;
+    public int maxRotation=2;
 
     public Piece4(Matrice m){
         xMid=new int[4];

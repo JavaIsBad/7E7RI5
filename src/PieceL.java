@@ -8,6 +8,7 @@
 
 public class PieceL extends Piece{
     private int rotation;
+    public int maxRotation=4;
 
     public PieceL(Matrice m){
         xMid=new int[4];

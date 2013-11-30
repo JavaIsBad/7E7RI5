@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 public class GameWindow extends JPanel {
 
-    final int taillex=320, tailley=640;
+    final int taillex=320, tailley=500;
     final int taillecarrex=taillex/10, taillecarrey=tailley/20;
     final int bords=taillecarrex;
     BufferedImage background=null, piece=null;

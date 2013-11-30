@@ -14,6 +14,7 @@ public class IA {
     
     static Robot robot;
     static Matrice matrice;
+    static Matrice matriceIA;
     static int rotationXfois; //combien de fois le robot va devoir rotationner
     static int colonneOuPlacerLeO; //a quelle colonne faut-il placer le 0?
 	static Piece PieceEnCours;
@@ -80,55 +81,149 @@ public class IA {
     
     
     /////////////////////////////////////////////////////////
-   int[][] copier_matrice(Matrice m){
+    /**
+     * Copie une matrice dans une autre
+     * @param m, une matrice
+     * @return une matrice
+     */
+   Matrice copier_matrice(Matrice m){
 		int i,j;
-		int[][] matrice = new int[m.sizeX][m.sizeY];
+		Matrice matrice = new Matrice();
 		for (i=0;i<10;i++){
 			for (j=0; j<20 ; j++){
-				matrice[i][j]=m.get(i,j);
+				matrice.put(i,j,m?.get(i,j));
 			}
 		}
 		return matrice;
 	}
 	
-	Piece depistage_Piece(int [][] m){
-		int SizeX=m.length/2;
-		int SizeY=m[0].length;
+	/**
+	 * Depiste la piece qui est jouée
+	 * @param m, une matrice
+	 * @return la piece en cours
+	 */
+	Piece depistage_Piece(matrice m){
+		int SizeX=m.sizeX/2;
 		Piece piece;
 		int i,j;
-		if (m[SizeX][1]>=1 && m[SizeX-1][1] >=1 && m[SizeX][0]>=1 && m[SizeX+1][0]>=1)
-			piece=new Piece4(matrice);
-		else if (m[SizeX][1]>=1 && m[SizeX+1][1]>=1 && m[SizeX][0]>=1 && m[SizeX-1][0]>=1)
-			piece=new Piece4Inv(matrice);
-		else if (m[SizeX][0]>=1 && m[SizeX-1][0]>=1 && m[SizeX-1][1]>=1 && m[SizeX][1]>=1)
-			piece=new PieceCarre(matrice);
-		else if (m[SizeX][0]>=1 && m[SizeX-1][0]>=1 && m[SizeX+1][0]>=1 && m[SizeX+1][1]>=1)
-			piece=new PieceF(matrice);
-		else if (m[SizeX][0]>=1 && m[SizeX-1][0]>=1 && m[SizeX+1][0]>=1 && m[SizeX+2][0]>=1)
-			piece=new PieceI(matrice);
-		else if (m[SizeX][0]>=1 && m[SizeX+1][0]>=1 && m[SizeX-1][0]>=1 && m[SizeX-1][1]>=1)
-			piece=new PieceL(matrice);
-		else if (m[SizeX][0]>=1 && m[SizeX][1]>=1 && m[SizeX+1][0]>=1 && m[SizeX-1][0]>=1)
-			piece=new PieceT(matrice);
-		else piece = new Piece4(matrice);
+		if (m.get(SizeX,1)>=1 && m.get(SizeX-1,1) >=1 && m.get(SizeX,0)>=1 && m.get(SizeX+1,0)>=1)
+			PieceEnCours=new Piece4(matrice);
+		else if (m.get(SizeX,1)>=1 && m.get(SizeX+1,1)>=1 && m.get(SizeX,0)>=1 && m.get(SizeX-1,0)>=1)
+			PieceEnCours=new Piece4Inv(matrice);
+		else if (m.get(SizeX,0)>=1 && m.get(SizeX-1,0)>=1 && m.get(SizeX-1,1)>=1 && m.get(SizeX,1)>=1)
+			PieceEnCours=new PieceCarre(matrice);
+		else if (m.get(SizeX,0)>=1 && m.get(SizeX-1,0)>=1 && m.get(SizeX+1,0)>=1 && m.get(SizeX+1,1)>=1)
+			PieceEnCours=new PieceF(matrice);
+		else if (m.get(SizeX,0)>=1 && m.get(SizeX-1,0)>=1 && m.get(SizeX+1,0)>=1 && m.get(SizeX+2,0)>=1)
+			PieceEnCours=new PieceI(matrice);
+		else if (m.get(SizeX,0)>=1 && m.get(SizeX+1,0)>=1 && m.get(SizeX-1,0)>=1 && m.get(SizeX-1,1)>=1)
+			PieceEnCours=new PieceL(matrice);
+		else if (m.get(SizeX,0)>=1 && m.get(SizeX,1)>=1 && m.get(SizeX+1,0)>=1 && m.get(SizeX-1,0)>=1)
+			PieceEnCours=new PieceT(matrice);
+		else PieceEnCours = null;
 			
 		return piece;
 	}
 	
-	int [][] save_tableau(int [][] tab){
-		int[][] mAux=new int[tab.length][tab[0].length];
-		int i,j;
-		for (i=0;i<tab.length;i++){
-			for (j=0;j<tab[0].length;j++){
-				mAux[i][j]=tab[i][j];
-			}
-		}
-		return mAux;
+	
+	/**
+	 * Regarde si un jeu est fini
+	 * @return true si le jeu est fini, false sinon
+	 */
+	public boolean jeu_fini(){
+		return collision(PieceEnCours);
 	}
 	
-	/*void jeu_fini(Matrice m); //a faire...
+	/**
+	 * Renvoie la partie la plus a gauche d'une piece
+	 * @param une Piece
+	 * @return une colonne
+	 */
+	public int partie_gauche(Piece p){
+		int i;
+		int value=p.x[0];
+		for (i=1;i<p.x.length;i++){
+			if p.x[i]<value
+				value=p.x[i];
+			}
+		return value;
+	}
 	
+	/**
+	 * Renvoie la partie la plus a droite d'une piece
+	 * @param une Piece
+	 * @return une colonne
+	 */
+	public int partie_droite(Piece p){
+		int i;
+		int value=p.x[0];
+		for (i=1;i<p.x.length;i++){
+			if p.x[i]>value
+				value=p.x[i];
+			}
+		return value;
+	}
 	
+	/**
+	 * Renvoie le nombre maximum de rotation pour une piece
+	 * @param p, une piece
+	 * @return un int
+	 */
+	public int rotationMax(Piece p){
+		return p.maxRotation;
+	}
+	
+	/**
+	 * déplace la piece en cours pour que la case 0 corresponde a la colonne
+	 * @param colonne, un entier
+	 * @param p, une Piece
+	 */
+	public void deplacer_piece(int colonne, Piece p){
+		int value = p.x[0]-colonne;
+		if (value > 0){
+			for (int i=0; i<value; i++){
+				p.droite();
+		}
+		else if (value < 0){
+			for (int i=0; i>value ;i--){
+				p.gauche();
+		} 
+	}
+	
+	/**
+	 * Compte le nombre de trou dans 1 colonne
+	 * @param m, une matrice
+	 * @param colonne, un entier
+	 * @return le nombre de trous dans la colonne
+	 */
+	public int nbTrou(Matrice m, int colonne){
+		int i,j=19;
+		int cpt=0;
+		for (i=0; i<m.sizeY;i++)
+			if (m.get(i,colonne) >= 1){
+				j=i;
+				break;
+			}
+		for (i=j; i<m.sizeY;i++){
+			if (m.get(i,colonne) == 0){
+				cpt++;
+		}
+	return cpt;
+	}
+	
+	/**
+	 * Compte le nombre de trou dans une Matrice
+	 * @param m, une Matrice
+	 * @return le nombre de trou dans la matrice
+	 */
+	 public int compter_trou(Matrice m){
+		 int cpt=0;
+		 for (int i=0; i<m.sizeX; i++){
+			 cpt+=nbTrou(m,i);
+		 }
+	return cpt;
+	}
+	/*
 	void jouer_piece(int[][] m, Piece p,int colonne, int rotate){// a faire
 	}
 	void dejouer_piece(int [][]m, Piece p){} //a faire
@@ -142,45 +237,6 @@ public class IA {
 	}
 	*/
 	
-	int compte_lignes_finies(int[][] m){
-		int cpt=0;
-		int cmpteur;
-		int i,j;
-		for (j=0;j<m[0].length;j++){
-			cmpteur=0;
-			for (i=0; i<m.length;i++){
-				if (m[i][j]>=1)
-				cmpteur++;
-			}
-			if (cmpteur==10)
-				cpt++;
-		}
-	return cpt;
-	}
-    int nbtrou(int[][] mat,int colonne){
-		int ligneDebut=19; //tout dernier ligne
-		int cpt=0; 
-		int i,j;
-		for (i=0; i<20;i++){
-			if (mat[colonne][i]>=1)
-				ligneDebut=i; 
-		}
-		for (j=i; j<20; j++){
-			if (mat[colonne][j]==0)
-				cpt++;
-		}
-		return cpt;
-	}
-	
-	
-	int compter_trou(int[][] m, Piece pieceEnCours,int colonne, int rotation){
-	int nbretrou=0;
-//	jouer_piece(m,pieceEnCours,colonne,rotation);
-		for (int i=0; i<10;i++){ //pour chaque colonne
-			nbretrou=nbtrou(m,i)+nbretrou;
-		}
-	return nbretrou;
-	}
 	
 	 public static void main(String[] args) throws AWTException, IOException {	
 	// Execution 

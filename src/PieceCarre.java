@@ -4,6 +4,7 @@
  */
 
 public class PieceCarre extends Piece{
+	public int maxRotation=0;
 
     public PieceCarre(Matrice m){
         xMid=new int[4];
