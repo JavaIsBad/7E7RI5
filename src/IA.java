@@ -88,7 +88,9 @@ public class IA {
      */
    Matrice copier_matrice(Matrice m){
 		int i,j;
-		Matrice matrice = new Matrice();
+		try{
+		Matrice matrice = new Matrice();}
+		catch(RemoteException re) {}
 		for (i=0;i<10;i++){
 			for (j=0; j<20 ; j++){
 				matrice.put(i,j,m.get(i,j));
