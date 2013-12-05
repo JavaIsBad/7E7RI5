@@ -11,55 +11,55 @@
 public class SurfaceIa{
 
     private static boolean s1(int x, int y, int[][] game){
-        return ((x+1)< game.length) && (game[x][y]==0) && (game[x+1][y]==0);
+        return x+1< game.length && game[x][y]==0 && game[x+1][y]==0 && (y+1==game[0].length || game[x][y+1]!=0 && game[x+1][y+1]!=0);
     }
 
     private static boolean s2(int x, int y, int[][] game){
-        return ((x+2)< game.length) && (y-1)>=0 && (game[x][y]==0) && (game[x+1][y-1]==0) && game[x+2][y-1]==0 && game[x][y-1]==0;
+        return x+2< game.length && y-1>=0 && game[x][y]==0 && game[x+1][y-1]==0 && game[x+2][y-1]==0 && game[x][y-1]==0 && (y+1==game[0].length || game[x][y+1]!=0) && game[x+1][y]!=0 && game[x+2][y]!=0;
     }
 
     private static boolean s3(int x, int y, int[][] game){
-        return ((x+1)< game.length) && (y+2)<game[0].length && (game[x][y]==0) && (game[x+1][y+1]==0) && game[x+1][y+2]==0 && game[x+1][y]==0;
+        return x+1< game.length && y+2<game[0].length && game[x][y]==0 && game[x+1][y+1]==0 && game[x+1][y+2]==0 && game[x+1][y]==0 && (y+3==game[0].length || game[x+1][y+3]!=0) && game[x][y+1]!=0 && game[x][y+2]!=0;
     }
 
     private static boolean s4(int x, int y, int[][] game){
-        return ((x+2)< game.length) && (game[x][y]==0) && (game[x+1][y]==0) && game[x+2][y]==0;
+        return x+2< game.length && game[x][y]==0 && game[x+1][y]==0 && game[x+2][y]==0 && (y+1==game[0].length || game[x][y+1]!=0 && game[x+1][y+1]!=0 && game[x+2][y+1]!=0);
     }
 
     private static boolean s5(int x, int y, int[][] game){
-        return ((x+2)< game.length) && (y+1)<game[0].length && (game[x][y]==0) && (game[x+1][y]==0) && game[x+2][y+1]==0 && game[x+2][y]==0;
+        return x+2< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+2][y+1]==0 && game[x+2][y]==0 && (y+2==game[0].length || game[x+2][y+2]!=0) && game[x][y+1]!=0 && game[x+1][y+1]!=0;
     }
 
     private static boolean s6(int x, int y, int[][] game){
-        return ((x+1)< game.length) && (y-2)>=0 && (game[x][y]==0) && (game[x][y-1]==0) && game[x][y-2]==0 && game[x+1][y-2]==0;
+        return x+1< game.length && y-2>=0 && game[x][y]==0 && game[x][y-1]==0 && game[x][y-2]==0 && game[x+1][y-2]==0 && (y+1==game[0].length || game[x][y+1]!=0) && game[x+1][y]!=0 && game[x+1][y-1]!=0;
     }
 
     private static boolean s7(int x, int y, int[][] game){
-        return ((x+2)< game.length) && (y-1)>=0 && (game[x][y]==0) && (game[x+1][y]==0) && game[x+1][y-1]==0 && game[x+2][y-1]==0;
+        return x+2< game.length && y-1>=0 && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y-1]==0 && game[x+2][y-1]==0 && (y+1==game[0].length ||game[x][y+1]!=0 && game[x+1][y+1]!=0) && game[x+2][y]!=0 ;
     }
 
     private static boolean s8(int x, int y, int[][] game){
-        return ((x+1)< game.length) && (y+1)<game[0].length && (game[x][y]==0) && (game[x+1][y]==0) && game[x+1][y+1]==0;
+        return x+1< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y+1]==0 && (y+2==game[0].length || game[x+1][y+2]!=0) && game[x][y+1]!=0;
     }
 
     private static boolean s9(int x, int y, int[][] game){
-        return ((x+2)< game.length) && (y+1)<game[0].length && (game[x][y]==0) && (game[x+1][y]==0) && game[x+1][y+1]==0 && game[x+2][y+1]==0;
+        return x+2< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y+1]==0 && game[x+2][y+1]==0 && (y+2==game[0].length || game[x+1][y+2]!=0 && game[x+2][y+2]!=0) && game[x][y+1]!=0;
     }
 
     private static boolean s10(int x, int y, int[][] game){
-        return ((x+1)< game.length) && (y-1)>=0 && (game[x][y]==0) && (game[x][y-1]==0) && game[x+1][y-1]==0;
+        return x+1< game.length && y-1>=0 && game[x][y]==0 && game[x][y-1]==0 && game[x+1][y-1]==0 && (y+1==game[0].length || game[x][y+1]!=0) && game[x+1][y]!=0;
     }
 
     private static boolean s11(int x, int y, int[][] game){
-        return ((x+2)< game.length) && (y+1)<game[0].length && (game[x][y]==0) && (game[x+1][y]==0) && game[x+1][y+1]==0 && game[x+2][y]==0;
+        return x+2< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y+1]==0 && game[x+2][y]==0 && (y+2==game[0].length || game[x+1][y+2]!=0) && game[x+2][y+1]!=0 && game[x][y+1]!=0;
     }
 
     private static boolean s12(int x, int y, int[][] game){
-        return ((x+3)< game.length) && (game[x][y]==0) && (game[x+1][y]==0)&& game[x+2][y]==0 && game[x+3][y]==0;
+        return x+3< game.length && game[x][y]==0 && game[x+1][y]==0&& game[x+2][y]==0 && game[x+3][y]==0 && (y+1==game[0].length || game[x][y+1]!=0 && game[x+1][y+1]!=0 && game[x+2][y+1]!=0 && game[x+3][y+1]!=0);
     }
 
     private static boolean s13(int x, int y, int[][] game){
-        return game[x][y]==0;
+        return game[x][y]==0 && (y+1==game[0].length || game[x][y+1]!=0);
     }
 
     public static void isMatchingPattern(int piecenbr, int x, int y, int [][] game, int []retour){

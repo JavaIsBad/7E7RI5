@@ -116,8 +116,12 @@ public class IA {
 				}
 */
 			int patternnbr=0;
-			while(tabdepattern[patternnbr]<1)
+			while(patternnbr<tabdepattern.length && tabdepattern[patternnbr]<1)
 				patternnbr++;
+			if(patternnbr==tabdepattern.length){
+			    patternnbr=tabdepattern.length/2;
+			    System.out.println("Default");
+            }
 			int nbrotationafaire=SurfaceIa.nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee(piecerotation[0], piecerotation[1], SurfaceIa.rotationPourPattern(piecerotation[0], tabdepattern[patternnbr]));
 			send_key(3);
 			for(int i=0;i<nbrotationafaire;i++){
