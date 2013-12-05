@@ -34,4 +34,15 @@ public class PieceCarre extends Piece{
     public int getrotation(){
 		return maxRotation;
 	}
+	
+	public static void isMe(int x, int y, int[][] game ,int[] tab){
+		if(x+1<game.length && y-1>=0 && game[x][y]!=0 && game[x+1][y]!=0 && game[x+1][y-1]!=0 && game[x][y-1]!=0){
+			tab[0]=1;
+			tab[1]=0;
+		}
+		else{
+				tab[0]=0;
+			}
+	}
+
 }

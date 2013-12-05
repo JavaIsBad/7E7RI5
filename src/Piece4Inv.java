@@ -61,4 +61,21 @@ public class Piece4Inv extends Piece{
     public int getrotation(){
 		return maxRotation;
 	}
+	
+	public static void isMe(int x, int y, int[][] game ,int[] tab){
+		if(x+1<game.length && x-1>=0 && y-1>=0 && game[x][y]!=0 && game[x+1][y]!=0 && game[x][y-1]!=0 && game[x-1][y-1]!=0){
+			tab[0]=5;
+			tab[1]=0;
+		}
+		else{
+			if(y-2>=0 && game[x][y]!=0 && game[x][y-1]!=0 && game[x+1][y-1]!=0 && game[x+1][y-2]!=0){
+				tab[0]=5;
+				tab[1]=1;
+			}
+			else{
+				tab[0]=0;
+			}
+		}
+	}
+
 }

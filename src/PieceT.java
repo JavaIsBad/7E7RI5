@@ -115,7 +115,7 @@ public class PieceT extends Piece{
                 y[3]+=1;
                 break;
         }
-        if (rotation==0) //je sais pas si le modulo marche pour la négativité
+        if (rotation==0) 
             rotation=3;
         else{
             rotation-=1;
@@ -123,5 +123,33 @@ public class PieceT extends Piece{
     }
     public int getrotation(){
 		return maxRotation;
+	}
+	
+	public static void isMe(int x, int y, int[][] game ,int[] tab){
+		if(x-1>=0 && x+1<game.length && y-1>=0 && game[x][y]!=0 && game[x][y-1]!=0 && game[x-1][y-1]!=0 && game[x+1][y-1]!=0){
+			tab[0]=6;
+			tab[1]=0;
+		}
+		else{
+			if(x+1<game.length && y-2>=0 && game[x][y]!=0 && game[x][y-1]!=0 && game[x][y-2]!=0 && game[x+1][y-1]!=0){
+				tab[0]=6;
+				tab[1]=1;
+			}
+			else{
+				if(x+2<game.length && y-1>=0 &&game[x][y]!=0 && game[x+1][y]!=0 && game[x+2][y]!=0 && game[x+1][y-1]!=0){
+					tab[0]=6;
+					tab[1]=2;
+				}
+				else{
+					if(x-1>=0 && y-2>=0 && game[x][y]!=0 && game[x][y-1]!=0 && game[x][y-2]!=0 && game[x-1][y-1]!=0){
+						tab[0]=6;
+						tab[1]=3;
+					}
+					else{
+						tab[0]=0;
+					}
+				}
+			}
+		}
 	}
 }

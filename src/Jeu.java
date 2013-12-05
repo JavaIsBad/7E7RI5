@@ -14,6 +14,25 @@ public class Jeu {
     private TimerTask task;
     private int vitesse=0;
     private boolean pause=false;
+    
+    public void basGauche(int[] coord){
+		int[]x=pieceEnCours.getX();
+		int[]y=pieceEnCours.getY();
+		int maxy=y[0];
+		int minx=x[0];
+		for(int i=1; i<y.length; i++)
+			if(maxy<y[i]){
+				minx=x[i];
+				maxy=y[i];
+			}
+			else
+				if(maxy==y[i]){
+					if(minx>x[i])
+						minx=x[i];
+				}
+		coord[0]=minx;
+		coord[1]=maxy;
+	}
 
     public Jeu(Piece[] pj, Matrice m, GameWindow gw){
         if(pj!=null && m!=null && gw!=null){
@@ -75,6 +94,7 @@ public class Jeu {
                 pieceEnCours.rotationner();
             pieceEnCours.dessinerPiece(matrice, couleurEnCours);
             gamewindow.refresh();
+            gaucheGauche();
         }
     }
 
@@ -204,6 +224,19 @@ public class Jeu {
             }, 100, vitesse);
 
         }
+        basGauche(matrice.positionPiece);
+        gaucheGauche();
+        matrice.refresh();
         gamewindow.refresh();
     }
+    
+    public void gaucheGauche(){
+		int[]x=pieceEnCours.getX();
+		int xmin=x[0];
+		for(int i=0; i<x.length; i++)
+			if(xmin>x[i])
+				xmin=x[i];
+		matrice.positionGauche=xmin;
+	}
+		
 }

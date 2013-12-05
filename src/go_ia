@@ -1,0 +1,6 @@
+#!/bin/bash
+killall rmiregistry
+killall java
+./compile
+rmiregistry &
+java IA

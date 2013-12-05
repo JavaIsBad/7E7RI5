@@ -43,7 +43,9 @@ public class GameWindow extends JPanel {
 
     public void refresh()
     {
+/*
         matrice.refresh();
+*/
         repaint(getVisibleRect());
     }
 

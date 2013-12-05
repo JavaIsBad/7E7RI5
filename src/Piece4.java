@@ -67,13 +67,13 @@ public class Piece4 extends Piece{
 	}
 	
 	public static void isMe(int x, int y, int[][] game ,int[] tab){
-		if(game[x][y]!=0 && game[x+1][y] && game[x+1][y-1] && game[x+2][y-1]){
-			tab[0]=1;
+		if(x+2<game.length && y-1>=0 && game[x][y]!=0 && game[x+1][y]!=0 && game[x+1][y-1]!=0 && game[x+2][y-1]!=0){
+			tab[0]=4;
 			tab[1]=0;
 		}
 		else{
-			if(game[x][y]!=0 && game[x][y-1] && game[x-1][y-1] && game[x-1][y-2]){
-				tab[0]=1;
+			if(x-1>=0 && y-2>=0 &&game[x][y]!=0 && game[x][y-1]!=0 && game[x-1][y-1]!=0 && game[x-1][y-2]!=0){
+				tab[0]=4;
 				tab[1]=1;
 			}
 			else{

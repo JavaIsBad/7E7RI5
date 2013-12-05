@@ -6,6 +6,8 @@ class Matrice extends UnicastRemoteObject implements MatriceInterface {
     int matrice_IA[][];
     int matrice[][];
     int sizeX, sizeY;
+    public int[] positionPiece;
+    public int positionGauche;
     private boolean is_busy;
 
     public Matrice() throws RemoteException
@@ -13,9 +15,19 @@ class Matrice extends UnicastRemoteObject implements MatriceInterface {
         super();
         matrice = new int[10][20];
         matrice_IA = new int[10][20];
+        positionPiece = new int[2];
         sizeX=10;
         sizeY=20;
     };
+    
+    public int getGauche() throws RemoteException{
+		return positionGauche;
+	}
+    
+    public int[] get_coord() throws RemoteException{
+		return positionPiece;
+	}
+
 
     // Appel distant pour la IA
     public int[][] get_matrice() throws RemoteException {

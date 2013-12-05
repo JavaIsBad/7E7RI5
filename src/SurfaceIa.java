@@ -9,7 +9,6 @@
  * pièce 7 : I
  */
 public class SurfaceIa{
-    private int[] surfaces=new int[14];
 
     private static boolean s1(int x, int y, int[][] game){
         return ((x+1)< game.length) && (game[x][y]==0) && (game[x+1][y]==0);
@@ -63,7 +62,7 @@ public class SurfaceIa{
         return game[x][y]==0;
     }
 
-    public void isMatchingPattern(int piecenbr, int x, int y, int [][] game, int []retour){
+    public static void isMatchingPattern(int piecenbr, int x, int y, int [][] game, int []retour){
 		boolean boo;
 		for(int i=0; i<2; i++)
 			retour[i]=0;
@@ -194,6 +193,196 @@ public class SurfaceIa{
 				break;
 		}
 	}
+	
+	public static int plusbasDansColonne(int x, int[][] game){
+		int enbas=game[x].length-1;
+		for(int i=enbas; i>0; i--)
+			if(game[x][i]!=0)
+				enbas=i-1;
+		return enbas;
+	}
+	
+	public static void rempliePattern (int piece, int [] patternitude, int[][] game){
+		int y;
+		int pattern[]= new int[2];
+		for(int i=0; i<game.length; i++){
+			y=plusbasDansColonne(i,game);
+			isMatchingPattern(piece, i, y, game, pattern);
+			patternitude[i]=pattern[0];   // a changer si possible
+		}
+	}
+	
+	public static void piece(int x, int y, int[][] game, int[] pieceAndRotation){
+		PieceCarre.isMe(x, y, game, pieceAndRotation);
+		if(pieceAndRotation[0]!=0)
+			return;
+		Piece4.isMe(x, y, game, pieceAndRotation);
+		if(pieceAndRotation[0]!=0)
+			return;
+		Piece4Inv.isMe(x, y, game, pieceAndRotation);
+		if(pieceAndRotation[0]!=0)
+			return;
+		PieceT.isMe(x, y, game, pieceAndRotation);
+		if(pieceAndRotation[0]!=0)
+			return;
+		PieceL.isMe(x, y, game, pieceAndRotation);
+		if(pieceAndRotation[0]!=0)
+			return;
+		PieceF.isMe(x, y, game, pieceAndRotation);
+		if(pieceAndRotation[0]!=0)
+			return;
+		PieceI.isMe(x, y, game, pieceAndRotation);
+		if(pieceAndRotation[0]!=0)
+			return;
+	}
+	
+	public static int nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee (int piece, int rotationDepart, int rotationFin){
+		int nbrotation=0;
+		if(piece==4 || piece==5 || piece==7){
+			if(rotationDepart != rotationFin)
+				nbrotation++;
+		}
+		else{
+			if(piece==3 || piece==2 || piece==6){
+				while(rotationDepart != rotationFin){
+					nbrotation++;
+					rotationFin=(rotationFin+1)%4;
+				}
+			}
+		}
+		return nbrotation;
+	}
+	
+	public static int rotationPourPattern(int piece, int pattern){
+		int valret=0;
+		switch(piece){
+			case 1: 
+				valret=0;
+				break;
+			case 2:
+				switch(pattern){
+					case 1:
+						valret=1;
+						break;
+					case 2:
+						valret=0;
+						break;
+					case 3:
+						valret=3;
+						break;
+					case 4:
+						valret=2;
+						break;
+				}
+				break;
+			case 3:
+				switch(pattern){
+					case 1:
+						valret=3;
+						break;
+					case 5:
+						valret=0;
+						break;
+					case 6:
+						valret=1;
+						break;
+					case 4:
+						valret=2;
+						break;
+				}
+				break;
+			case 4:
+				switch(pattern){
+					case 7:
+						valret=0;
+						break;
+					case 8:
+						valret=1;
+						break;
+				}
+				break;
+			case 5:
+				switch(pattern){
+					case 9:
+						valret=0;
+						break;
+					case 10:
+						valret=1;
+						break;
+				}
+				break;
+			case 6:
+				switch(pattern){
+					case 4:
+						valret=2;
+						break;
+					case 10:
+						valret=1;
+						break;
+					case 11:
+						valret=0;
+						break;
+					case 8:
+						valret=3;
+						break;
+				}
+				break;
+			case 7:
+				switch(pattern){
+					case 12:
+						valret=0;
+						break;
+					case 13:
+						valret=1;
+						break;
+				}
+				break;
+		}
+		return valret;
+	}
+	
+/*
+	public static void trouvePieceIsoleeDansLeVideIntersiderale(int[][] game, int[] xy){
+		boolean trouvee=false;
+		for(int i=game.length/2-3; i<game.length/2+3; i++)
+			for(int j=0; j<3; j++){
+				if(game[i][j]!=0 && estIsolee(i, j, game, 4)){
+					plusBasGauche(i, j, xy);
+					return;
+				}
+			}
+	}
+*/
+
+/*
+	public static boolean estIsoleebis(int x, int y, int[][]game, int nbmax){
+		if(nbmax==0)
+			return false;
+		if(game[x-1][y]!=0 && game[x-1][y]!=-3){
+			game[x-1][y]=-3;
+			return estIsolee(x-1, y, game, nbmax-1);
+		}
+		if(game[x-1][y+1]!=0 && game[x-1][y+1]!=-3){
+			game[x-1][y+1]=-3;
+			return estIsolee(x-1, y+1, game, nbmax-1);
+		}
+		if(game[x][y+1]!=0 && game[x][y+1]!=-3){
+			game[x][y+1]=-3;
+			return estIsolee(x, y+1, game, nbmax-1);
+		}
+		if(game[x+1][y+1]!=0 && game[x+1][y+1]!=-3){
+			game[x+1][y+1]=-3;
+			return estIsolee(x+1, y+1, game, nbmax-1);
+		}
+		if(game[x+1][y]!=0 && game[x+1][y]!=-3){
+			game[x+1][y]=-3;
+			return estIsolee(x+1, y, game, nbmax-1);
+		}
+		return true;
+	}
+*/
+	
+/*
     public static void main(String[] argvs){
         int[][]tab=new int[10][20];
         tab[1][19]=1;
@@ -214,4 +403,5 @@ public class SurfaceIa{
         System.out.println("S12 :" +s12(0,19,tab));
         System.out.println("S13 :" +s13(0,19,tab));
     }
+*/
 }
