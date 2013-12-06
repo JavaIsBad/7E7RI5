@@ -7,15 +7,14 @@
  */
 
 public class PieceL extends Piece{
-    private int rotation;
     public int maxRotation=4;
 
-    public PieceL(Matrice m){
+    public PieceL(int sizex){
         xMid=new int[4];
         yMid=new int[4];
         x=new int[4];
         y=new int[4];
-        initPosition(m);
+        initPosition(sizex);
         rotation=0;
     }
 
@@ -24,8 +23,8 @@ public class PieceL extends Piece{
         rotation=0;
     }
 
-    private void initPosition(Matrice m){
-        int mid= m.sizeX/2;
+    private void initPosition(int sizex){
+        int mid= sizex/2;
         xMid[0]=mid;
         yMid[0]=0;
         xMid[1]=mid+1;

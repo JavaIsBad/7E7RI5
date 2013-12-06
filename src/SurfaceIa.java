@@ -341,67 +341,167 @@ public class SurfaceIa{
 		return valret;
 	}
 	
-/*
-	public static void trouvePieceIsoleeDansLeVideIntersiderale(int[][] game, int[] xy){
-		boolean trouvee=false;
-		for(int i=game.length/2-3; i<game.length/2+3; i++)
-			for(int j=0; j<3; j++){
-				if(game[i][j]!=0 && estIsolee(i, j, game, 4)){
-					plusBasGauche(i, j, xy);
-					return;
+	
+	private static int hauteurColonne(int [][]game, int colonne){ //hauteurmaximum : 0
+		int ligneDebut=0;
+		for (int i=0; i<game[0].length;i++){
+                        if (game[colonne][i]>=1){
+                                ligneDebut=i; 
+                                break;
+						}
+					}
+				return game[0].length-ligneDebut;
+	
+	}
+	
+	private static int hauteurMoyenne(int[][] game){
+		int moyenne=0;
+		for (int i=0;i<game.length;i++){
+			moyenne+=hauteurColonne(game,i);
+		}
+		return (moyenne/game.length);
+	}
+	
+	private static int hauteurMax(int[][] game){
+		int max=0;
+		for (int i=0;i<game.length;i++){
+			if (hauteurColonne(game,i) > max)
+				max=hauteurColonne(game,i);
+		}
+		return max;
+	}
+	
+	/**
+ * Compte le nombre de lignes finies dans un tableau a 2 dimensions
+ * @param m, un tableau a 2 dimensions
+ * @return un entier
+ */
+	private static int compte_lignes_finies(int[][] m){
+			int cpt=0;
+			int cmpteur;
+			int i,j;
+			for (j=0;j<m[0].length;j++){
+				cmpteur=0;
+				for (i=0; i<m.length;i++){
+					if (m[i][j]>=1)
+					cmpteur++;
+				}
+				if (cmpteur==m.length)
+					cpt++;
+			}
+	return cpt;
+	}
+
+/**
+ * Compte le nombre de trous dans une colonne
+ * @param mat, un tableau a 2 dimensions
+ * @param colonne, une colonne
+ * @return un entier
+ */
+    private static int nbtrou(int[][] game,int colonne){
+                int cpt=0; 
+                int i,j;
+                for (j=game[0].length-hauteurColonne(game,colonne); j<game[0].length; j++){
+                        if (game[colonne][j]==0)
+                                cpt++;
+                }
+                return cpt;
+        }
+        
+/**
+ * Compte le nombre de trous dans un tableau a 2 dimensions
+ * @param mat, un tableau a 2 dimensions
+ * @param pieceEnCours, une Piece
+ * @param colonne, une colonne
+ * @param rotation, une rotation
+ * @return un entier
+ */
+        private static int compter_trou(int[][] m){
+        int nbretrou=0;
+                for (int i=0; i<m.length;i++){ //pour chaque colonne
+                        nbretrou=nbtrou(m,i)+nbretrou;
+                }
+        return nbretrou;
+        }
+       
+	
+	private static int calculerCout(int [][]game, int hauteurAvant){
+		int hauteurMax=hauteurMax(game); //hauteur Max du jeu
+		int hauteurMoy=hauteurMoyenne(game); //hauteur Moyenne du jeu
+		int lignesRemplies=compte_lignes_finies(game); //Nombre de lignes remplies
+		int nombreTrous=compter_trou(game); //Nombre de trous
+		int finalvalue=0;
+		if (lignesRemplies==4)
+			return 10000000;
+			if (hauteurAvant<hauteurMax && hauteurMax>10){
+				return -999999999;
+			}
+		finalvalue= 40*lignesRemplies; 
+		return finalvalue;
+	}
+	
+	
+	private static void parDefaut(int[]retour, Piece piece, int[][] game){
+		int maxRotate=piece.getrotation();
+		int troumin=game.length*game[0].length+1;
+		int hauteurmax=hauteurMax(game);
+		for (int i=0;i<game.length;i++){
+			for (int j=0; j<maxRotate; j++){
+				int positiony=plusbasDansColonne(i,game);
+				if(piece.peuxArriverOuIlVeut(i,positiony,j,game)){
+					if(piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony,j,game,1)){
+						int comptertrou=compter_trou(game);
+						if (troumin>comptertrou){
+							retour[0]=i;
+							retour[1]=j;
+							hauteurmax=hauteurMax(game);
+						}
+						else if (troumin==comptertrou){
+							if (hauteurMax(game)<hauteurmax){
+								retour[0]=i;
+								retour[1]=j;
+								hauteurmax=hauteurMax(game);
+							}
+						}
+						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony,j,game,0);
+					}
 				}
 			}
+		}
 	}
-*/
-
-/*
-	public static boolean estIsoleebis(int x, int y, int[][]game, int nbmax){
-		if(nbmax==0)
-			return false;
-		if(game[x-1][y]!=0 && game[x-1][y]!=-3){
-			game[x-1][y]=-3;
-			return estIsolee(x-1, y, game, nbmax-1);
-		}
-		if(game[x-1][y+1]!=0 && game[x-1][y+1]!=-3){
-			game[x-1][y+1]=-3;
-			return estIsolee(x-1, y+1, game, nbmax-1);
-		}
-		if(game[x][y+1]!=0 && game[x][y+1]!=-3){
-			game[x][y+1]=-3;
-			return estIsolee(x, y+1, game, nbmax-1);
-		}
-		if(game[x+1][y+1]!=0 && game[x+1][y+1]!=-3){
-			game[x+1][y+1]=-3;
-			return estIsolee(x+1, y+1, game, nbmax-1);
-		}
-		if(game[x+1][y]!=0 && game[x+1][y]!=-3){
-			game[x+1][y]=-3;
-			return estIsolee(x+1, y, game, nbmax-1);
-		}
-		return true;
-	}
-*/
 	
-/*
-    public static void main(String[] argvs){
-        int[][]tab=new int[10][20];
-        tab[1][19]=1;
-        tab[2][19]=1;
-        tab[1][18]=1;
-        tab[2][18]=1;
-        System.out.println("S01 :" +s1(0,19,tab));
-        System.out.println("S02 :" +s2(0,19,tab));
-        System.out.println("S03 :" +s3(0,19,tab));
-        System.out.println("S04 :" +s4(0,19,tab));
-        System.out.println("S05 :" +s5(0,19,tab));
-        System.out.println("S06 :" +s6(0,19,tab));
-        System.out.println("S07 :" +s7(0,19,tab));
-        System.out.println("S08 :" +s8(0,19,tab));
-        System.out.println("S09 :" +s9(0,19,tab));
-        System.out.println("S10 :" +s10(0,19,tab));
-        System.out.println("S11 :" +s11(0,19,tab));
-        System.out.println("S12 :" +s12(0,19,tab));
-        System.out.println("S13 :" +s13(0,19,tab));
-    }
-*/
+	
+	public static void getTheMaxiMenuBestOfPlusPlus(int[] retour,int nb, Piece piece, int[] tabdepattern, int[][] game){
+		int scoremax=-999999999;
+		boolean existpattern=false;
+		int i=0;
+		int colonnemax=0;
+		int scoreintermed=0;
+		while(i<tabdepattern.length){
+			if(tabdepattern[i]>0){
+				existpattern=true;
+				int rotationpp=rotationPourPattern(nb, tabdepattern[i]);
+				int hauteurAvant=hauteurMax(game);
+				int positiony=plusbasDansColonne(i,game);
+				if (piece.peuxArriverOuIlVeut(i,positiony,rotationpp,game)){
+					if(piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony, rotationpp, game, 1)){
+						System.out.println("Il peut arriver");
+						scoreintermed=calculerCout(game,hauteurAvant);
+						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony, rotationpp, game, 0);
+						//IA.display_matrice(game);
+						if(scoremax<scoreintermed){
+							scoremax=scoreintermed;
+							retour[0]=i;
+							retour[1]=rotationpp;
+						}
+					}
+				}
+			}
+		i++;
+		}
+		if(!existpattern){ //paspattern
+			parDefaut(retour, piece, game);
+			System.out.println("Par defaut");
+		}
+	}
 }

@@ -11,20 +11,19 @@
 
 public class Piece4 extends Piece{
     /// Indique dans quel état de rotation la pièce se trouve (ici que 2 possible)
-    private boolean rotation;
     public int maxRotation=2;
 
-    public Piece4(Matrice m){
+    public Piece4(int sizex){
         xMid=new int[4];
         yMid=new int[4];
         x=new int[4];
         y=new int[4];
-        initPosition(m);
-        rotation=true;
+        initPosition(sizex);
+        rotation=0;
     }
 
-    private void initPosition(Matrice m){
-        int mid= m.sizeX/2;
+    private void initPosition(int sizex){
+        int mid= sizex/2;
         xMid[0]=mid;
         yMid[0]=1;
         xMid[1]=mid-1;
@@ -36,12 +35,13 @@ public class Piece4 extends Piece{
     }
 
     public void rotationner(){
-        if(rotation){ // déjà en position de rotation
+        if(rotation==0){ // déjà en position de rotation
             x[1]+=1;
             y[1]+=1;
             x[2]-=1;
             y[2]+=1;
             x[3]-=2;
+            rotation=1;
         }
         else{
             x[1]-=1;
@@ -49,8 +49,8 @@ public class Piece4 extends Piece{
             x[2]+=1;
             y[2]-=1;
             x[3]+=2;
+            rotation=0;
         }
-        rotation=!rotation;
     }
 
     public void antirotation(){
@@ -59,7 +59,7 @@ public class Piece4 extends Piece{
 
     public void reinit(){
         super.reinit();
-        rotation=true;
+        rotation=0;
     }
     
     public int getrotation(){

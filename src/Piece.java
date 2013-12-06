@@ -8,6 +8,8 @@ public abstract class Piece{
     protected int x[], y[];
     /// Les positions x et y des pièces en haut au milieu du jeu lors de leur apparition (permet de réinitialiser la position lorque la pièce à déjà fini sa course vers le bas)
     protected int xMid[], yMid[];
+    protected int rotation;
+
 
     /**
      * Dessine la pièce sur la matrice de jeu
@@ -99,5 +101,90 @@ public abstract class Piece{
 	 * renvoie le nombre maximum de rotation pour une piece
 	 */	
 	public abstract int getrotation();
+	
+	public boolean collision(int [][] game){
+        boolean colli=false;
+        for(int i=0; !colli && i< x.length; i++)
+            colli= colli || x[i]>=game.length || x[i]<0 || y[i]>=game[0].length || y[i]<0 || game[x[i]][y[i]] != 0;
+        return colli;
+    }
+    
+	public boolean placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise( int x2, int y2, int rotate, int[][] game, int value){ //value => 0=plus là, 1=là
+		reinit();
+		while(rotate!=rotation){
+			antirotation();
+		}
+		int minx=x[0],maxy=y[0];
+		for(int i=1; i<y.length; i++)
+			if(maxy<y[i]){
+				minx=x[i];
+				maxy=y[i];
+			}
+			else
+				if(maxy==y[i]){
+					if(minx>x[i])
+						minx=x[i];
+				}
+		if(minx>x2)
+			for(;minx>x2;minx--)
+				gauche();
+		else
+			if(minx<x2)
+			for(;minx<x2;minx++)
+				droite();
+		int combienDescendre=y2-maxy;
+		for(int i=0; i<y.length; i++){
+			y[i]+=combienDescendre;
+			if(x[i]<0 || x[i]>=game.length || y[i]<0 || y[i]>=game[0].length)
+				return false;
+		}
+		for(int i=0; i<y.length; i++){
+			game[x[i]][y[i]]=value;
+		}
+		return true;
+	}
+	
+	public boolean peuxArriverOuIlVeut(int x2, int y2, int rotate, int[][] game){
+		reinit();
+		tomberPiece();
+		if (collision(game)){
+			return false;
+		}
+		while(rotate!=rotation){
+			antirotation();
+		}
+		int minx=x[0],maxy=y[0];
+		for(int i=1; i<y.length; i++){
+			if(maxy<y[i]){
+				minx=x[i];
+				maxy=y[i];
+			}
+			else
+				if(maxy==y[i]){
+					if(minx>x[i])
+						minx=x[i];
+				}
+		}
+		if(minx>x2)
+			for(;minx>x2;minx--){
+				gauche();
+				if (collision(game))
+					return false;
+			}	
+		else{
+				for(;minx<x2;minx++){
+					droite();
+				if (collision(game))
+					return false;
+			}
+		}
+		int combienDescendre=y2-maxy;
+		for (int i=0;i<combienDescendre;i++){
+			tomberPiece();
+			if (collision(game))
+				return false;
+		}
+		return true;
+	}
 
 }

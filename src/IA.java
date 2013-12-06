@@ -48,7 +48,7 @@ public class IA {
 	robot.keyRelease(k); 	        
     }
 
-/*
+
     public static void display_matrice(int t[][])
     {   int x,y;
 	System.out.println("Matrice vue par la IA : ");
@@ -63,7 +63,7 @@ public class IA {
 	    System.out.println("");
 	}
     }
-*/
+
 
     public static int[][] get_matrice()
     { int [][] result=null;
@@ -76,7 +76,9 @@ public class IA {
 	return result;
     }
     
-    public static void main(String[] args) throws AWTException, IOException {	
+    public static void main(String[] args) throws AWTException, IOException {
+		Piece []pieceia=new Piece[7];
+		Piece pieceJeu=null;	
 		// Execution 
 		run("java Tetris");
 		// Robot
@@ -96,6 +98,13 @@ public class IA {
 		int[] piecerotation=new int[2];
 		int[][] montab;
 		while((montab=get_matrice())==null);
+		pieceia[0]=new PieceCarre(montab.length);
+		pieceia[1]=new PieceL(montab.length);
+		pieceia[2]=new PieceF(montab.length);
+		pieceia[3]=new Piece4(montab.length);
+		pieceia[4]=new Piece4Inv(montab.length);
+		pieceia[5]=new PieceT(montab.length);
+		pieceia[6]=new PieceI(montab.length);
 		int []tabdepattern=new int[montab.length];
 		while(true){
 			montab=get_matrice();
@@ -110,19 +119,16 @@ public class IA {
 			}
 			SurfaceIa.piece(posistop[0], posistop[1], montab, piecerotation);
 			SurfaceIa.rempliePattern(piecerotation[0], tabdepattern, montab);
+			pieceJeu=pieceia[piecerotation[0]-1];
+			pieceJeu.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(posistop[0], posistop[1], piecerotation[1], montab, 0);
 /*
 			for(int t=0; t<tabdepattern.length; t++){
 					System.out.println(tabdepattern[t]);
 				}
 */
-			int patternnbr=0;
-			while(patternnbr<tabdepattern.length && tabdepattern[patternnbr]<1)
-				patternnbr++;
-			if(patternnbr==tabdepattern.length){
-			    patternnbr=tabdepattern.length/2;
-			    System.out.println("Default");
-            }
-			int nbrotationafaire=SurfaceIa.nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee(piecerotation[0], piecerotation[1], SurfaceIa.rotationPourPattern(piecerotation[0], tabdepattern[patternnbr]));
+			int[] retour={0,0};
+			SurfaceIa.getTheMaxiMenuBestOfPlusPlus(retour, piecerotation[0], pieceJeu, tabdepattern, montab);
+			int nbrotationafaire=SurfaceIa.nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee(piecerotation[0], piecerotation[1], retour[1]);
 			send_key(3);
 			for(int i=0;i<nbrotationafaire;i++){
 				send_key(2);
@@ -135,11 +141,11 @@ public class IA {
 				gauche=matrice.getGauche();
 			}catch(Exception e){}
 			System.out.println(gauche);
-			if(gauche>patternnbr)
-				for(;gauche>patternnbr;gauche--)
+			if(gauche>retour[0])
+				for(;gauche>retour[0];gauche--)
 					send_key(1);
 			else
-				for(;gauche<patternnbr;gauche++)
+				for(;gauche<retour[0 ];gauche++)
 					send_key(0);
 			send_key(4);
 		}

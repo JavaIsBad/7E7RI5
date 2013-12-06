@@ -21,13 +21,13 @@ class Tetris {
         } catch (RemoteException re) { System.out.println(re); System.exit(42); }
         catch (MalformedURLException e) { System.out.println(e) ; System.exit(43); }
 
-        piecejeu[0]=new Piece4(matrice);
-        piecejeu[1]=new Piece4Inv(matrice);
-        piecejeu[2]=new PieceCarre(matrice);
-        piecejeu[3]=new PieceF(matrice);
-        piecejeu[4]=new PieceL(matrice);
-        piecejeu[5]=new PieceT(matrice);
-        piecejeu[6]=new PieceI(matrice);
+        piecejeu[0]=new Piece4(matrice.sizeX);
+        piecejeu[1]=new Piece4Inv(matrice.sizeX);
+        piecejeu[2]=new PieceCarre(matrice.sizeX);
+        piecejeu[3]=new PieceF(matrice.sizeX);
+        piecejeu[4]=new PieceL(matrice.sizeX);
+        piecejeu[5]=new PieceT(matrice.sizeX);
+        piecejeu[6]=new PieceI(matrice.sizeX);
 
         // Base Graphique
         JFrame f = new JFrame("TetriS");
