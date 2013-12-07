@@ -357,14 +357,16 @@ public class SurfaceIa{
 	
 	
 	private static int hauteurColonne(int [][]game, int colonne){
-		int ligneDebut=0;
+		int ligneDebut=-1;
 		for (int i=0; i<game[0].length;i++){
-                        if (game[colonne][i]>=1){
-                                ligneDebut=i; 
-                                break;
-						}
-					}
-				return game[0].length-ligneDebut;
+			if (game[colonne][i]!=0){
+					ligneDebut=i; 
+					break;
+			}
+		}
+		if(ligneDebut==-1)
+			return 0;
+		return game[0].length-ligneDebut;
 	
 	}
 	
@@ -373,7 +375,7 @@ public class SurfaceIa{
 		for (int i=0;i<game.length;i++){
 			moyenne+=hauteurColonne(game,i);
 		}
-		return (moyenne/game.length);
+		return (moyenne/game[0].length);
 	}
 	
 	private static int hauteurMax(int[][] game){
@@ -454,13 +456,13 @@ public class SurfaceIa{
 	
 	private static void parDefaut(int[]retour, Piece piece, int[][] game){
 		int maxRotate=piece.getrotation();
-		int troumin=compter_trou(game); // init au max des trous
+		int troumin=game.length*game[0].length+1; // init au max des trous
 		int hauteurmax=hauteurMax(game);
 		for (int i=0;i<game.length;i++){
 			for (int j=0; j<maxRotate; j++){
 				int positionPlusBas=plusbasDansColonne(i,game);
 				if(piece.peuxArriverOuIlVeut(i, positionPlusBas, j, game)){
-					if(piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1)){
+						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1);
 						int comptertrou=compter_trou(game);
 						if (troumin>comptertrou){
 							retour[0]=i;
@@ -475,7 +477,6 @@ public class SurfaceIa{
 							}
 						}
 						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,0);
-					}
 				}
 			}
 		}
@@ -490,9 +491,10 @@ public class SurfaceIa{
 		int i=0;
 		int colonnemax=0;
 		int scoreintermed=0;
-		int moyenneDuJeu=hauteurMoyenne(game); // +2 pour compenser si tout le jeu est a la même hauteur np
-		while(false && i<tabdepattern.length){ //parcour des patterns
-			if(tabdepattern[i]>0 && moyenneDuJeu<=hauteurColonne(game,i)){ //S'il existe une pattern pour la pièce et si la pattern ne se situe pas trop haut dans le jeu
+		int moyenneDuJeu=hauteurMoyenne(game)+3; // +3 pour compenser si tout le jeu est a la même hauteur np
+		System.out.println("Hauteur Moyenne"+moyenneDuJeu);
+		while(i<tabdepattern.length){ //parcour des patterns
+			if(tabdepattern[i]>0 && hauteurColonne(game,i)<=moyenneDuJeu){ //S'il existe une pattern pour la pièce et si la pattern ne se situe pas trop haut dans le jeu
 				usePattern=true;
 				int rotationAfaire=rotationPourPattern(nb, tabdepattern[i]); // le nombre de rotation a faire pour être pareil que le pattern
 				int hauteurMaxAvant=hauteurMax(game);
@@ -511,7 +513,7 @@ public class SurfaceIa{
 			i++;
 		}
 		if(!usePattern){ //paspattern
-						System.out.println("Par defaut");
+			System.out.println("Par defaut");
 			parDefaut(retour, piece, game);
 		}
 	}

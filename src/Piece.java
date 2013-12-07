@@ -150,6 +150,7 @@ public abstract class Piece{
 		if (collision(game)){
 			return false;
 		}
+		tomberPiece();
 		while(rotate!=rotation){
 			antirotation();
 		}
