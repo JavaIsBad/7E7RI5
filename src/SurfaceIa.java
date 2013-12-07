@@ -214,26 +214,40 @@ public class SurfaceIa{
 	
 	public static void piece(int x, int y, int[][] game, int[] pieceAndRotation){
 		PieceCarre.isMe(x, y, game, pieceAndRotation);
-		if(pieceAndRotation[0]!=0)
+		if(pieceAndRotation[0]!=0){
+			System.out.println("Je suis une pièce carre"); //debug
 			return;
+		}
 		Piece4.isMe(x, y, game, pieceAndRotation);
-		if(pieceAndRotation[0]!=0)
+		if(pieceAndRotation[0]!=0){
+			System.out.println("Je suis une pièce 4"); //debug
 			return;
+		}
 		Piece4Inv.isMe(x, y, game, pieceAndRotation);
-		if(pieceAndRotation[0]!=0)
+		if(pieceAndRotation[0]!=0){
+			System.out.println("Je suis une pièce 4inv"); //debug
 			return;
+		}
 		PieceT.isMe(x, y, game, pieceAndRotation);
-		if(pieceAndRotation[0]!=0)
+		if(pieceAndRotation[0]!=0){
+			System.out.println("Je suis une pièce T"); //debug
 			return;
+		}
 		PieceL.isMe(x, y, game, pieceAndRotation);
-		if(pieceAndRotation[0]!=0)
+		if(pieceAndRotation[0]!=0){
+			System.out.println("Je suis une pièce L"); //debug
 			return;
+		}
 		PieceF.isMe(x, y, game, pieceAndRotation);
-		if(pieceAndRotation[0]!=0)
+		if(pieceAndRotation[0]!=0){
+			System.out.println("Je suis une pièce F"); //debug
 			return;
+		}
 		PieceI.isMe(x, y, game, pieceAndRotation);
-		if(pieceAndRotation[0]!=0)
+		if(pieceAndRotation[0]!=0){
+			System.out.println("Je suis une pièce I"); //debug
 			return;
+		}
 	}
 	
 	public static int nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee (int piece, int rotationDepart, int rotationFin){
@@ -342,7 +356,7 @@ public class SurfaceIa{
 	}
 	
 	
-	private static int hauteurColonne(int [][]game, int colonne){ //hauteurmaximum : 0
+	private static int hauteurColonne(int [][]game, int colonne){
 		int ligneDebut=0;
 		for (int i=0; i<game[0].length;i++){
                         if (game[colonne][i]>=1){
@@ -425,7 +439,7 @@ public class SurfaceIa{
         }
        
 	
-	private static int calculerCout(int [][]game, int hauteurAvant){
+	private static int calculerCout(int [][]game, int hauteurMaxAvant, int positionPiece){
 		int hauteurMax=hauteurMax(game); //hauteur Max du jeu
 		int hauteurMoy=hauteurMoyenne(game); //hauteur Moyenne du jeu
 		int lignesRemplies=compte_lignes_finies(game); //Nombre de lignes remplies
@@ -433,23 +447,20 @@ public class SurfaceIa{
 		int finalvalue=0;
 		if (lignesRemplies==4)
 			return 10000000;
-			if (hauteurAvant<hauteurMax && hauteurMax>10){
-				return -999999999;
-			}
-		finalvalue= 40*lignesRemplies; 
-		return finalvalue;
+		finalvalue= 40*lignesRemplies-(hauteurMax-hauteurMaxAvant)*32-36*hauteurColonne(game,positionPiece); 
+		return 1;
 	}
 	
 	
 	private static void parDefaut(int[]retour, Piece piece, int[][] game){
 		int maxRotate=piece.getrotation();
-		int troumin=game.length*game[0].length+1;
+		int troumin=compter_trou(game); // init au max des trous
 		int hauteurmax=hauteurMax(game);
 		for (int i=0;i<game.length;i++){
 			for (int j=0; j<maxRotate; j++){
-				int positiony=plusbasDansColonne(i,game);
-				if(piece.peuxArriverOuIlVeut(i,positiony,j,game)){
-					if(piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony,j,game,1)){
+				int positionPlusBas=plusbasDansColonne(i,game);
+				if(piece.peuxArriverOuIlVeut(i, positionPlusBas, j, game)){
+					if(piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1)){
 						int comptertrou=compter_trou(game);
 						if (troumin>comptertrou){
 							retour[0]=i;
@@ -463,7 +474,7 @@ public class SurfaceIa{
 								hauteurmax=hauteurMax(game);
 							}
 						}
-						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony,j,game,0);
+						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,0);
 					}
 				}
 			}
@@ -472,36 +483,36 @@ public class SurfaceIa{
 	
 	
 	public static void getTheMaxiMenuBestOfPlusPlus(int[] retour,int nb, Piece piece, int[] tabdepattern, int[][] game){
+		retour[0]=0;
+		retour[1]=0;
 		int scoremax=-999999999;
-		boolean existpattern=false;
+		boolean usePattern=false;
 		int i=0;
 		int colonnemax=0;
 		int scoreintermed=0;
-		while(i<tabdepattern.length){
-			if(tabdepattern[i]>0){
-				existpattern=true;
-				int rotationpp=rotationPourPattern(nb, tabdepattern[i]);
-				int hauteurAvant=hauteurMax(game);
-				int positiony=plusbasDansColonne(i,game);
-				if (piece.peuxArriverOuIlVeut(i,positiony,rotationpp,game)){
-					if(piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony, rotationpp, game, 1)){
-						System.out.println("Il peut arriver");
-						scoreintermed=calculerCout(game,hauteurAvant);
-						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positiony, rotationpp, game, 0);
-						//IA.display_matrice(game);
+		int moyenneDuJeu=hauteurMoyenne(game); // +2 pour compenser si tout le jeu est a la même hauteur np
+		while(false && i<tabdepattern.length){ //parcour des patterns
+			if(tabdepattern[i]>0 && moyenneDuJeu<=hauteurColonne(game,i)){ //S'il existe une pattern pour la pièce et si la pattern ne se situe pas trop haut dans le jeu
+				usePattern=true;
+				int rotationAfaire=rotationPourPattern(nb, tabdepattern[i]); // le nombre de rotation a faire pour être pareil que le pattern
+				int hauteurMaxAvant=hauteurMax(game);
+				int positionPlusBas=plusbasDansColonne(i, game);
+				if (piece.peuxArriverOuIlVeut(i, positionPlusBas, rotationAfaire, game)){
+						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i, positionPlusBas, rotationAfaire, game, 1);
+						scoreintermed=calculerCout(game, hauteurMaxAvant, i);
+						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i, positionPlusBas, rotationAfaire, game, 0);
 						if(scoremax<scoreintermed){
 							scoremax=scoreintermed;
 							retour[0]=i;
-							retour[1]=rotationpp;
+							retour[1]=rotationAfaire;
 						}
-					}
-				}
+	 			}
 			}
-		i++;
+			i++;
 		}
-		if(!existpattern){ //paspattern
+		if(!usePattern){ //paspattern
+						System.out.println("Par defaut");
 			parDefaut(retour, piece, game);
-			System.out.println("Par defaut");
 		}
 	}
 }

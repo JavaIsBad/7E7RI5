@@ -11,9 +11,8 @@ import java.net.MalformedURLException ;
 import java.util.*; 
 
 public class IA {
-    
-    static Robot robot;
     static MatriceInterface matrice;
+	static Robot robot;
 
     static void my_sleep(int ms)
     {
@@ -77,86 +76,71 @@ public class IA {
     }
     
     public static void main(String[] args) throws AWTException, IOException {
+		try {
+                     robot = new Robot();
+                     robot.setAutoDelay(50); // 100 ms
+                     robot.setAutoWaitForIdle(false);
+        } catch (AWTException ex) {
+                   Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+        }
 		Piece []pieceia=new Piece[7];
-		Piece pieceJeu=null;	
+		Piece pieceJeu=null;
 		// Execution 
 		run("java Tetris");
-		// Robot
-		try {
-			robot = new Robot();
-			robot.setAutoDelay(100); // 100 ms
-			robot.setAutoWaitForIdle(false);
-		} catch (AWTException ex) {
-			Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
-		}
 		// Client
 		try {
 			matrice = (MatriceInterface)Naming.lookup("//localhost/matrice");
 		} catch (MalformedURLException e) { System.out.println(e) ; }
 		catch (NotBoundException re) { System.out.println(re) ; }
-		int[] coord=new int[2];
-		int[] piecerotation=new int[2];
-		int[][] montab;
-		while((montab=get_matrice())==null);
-		pieceia[0]=new PieceCarre(montab.length);
-		pieceia[1]=new PieceL(montab.length);
-		pieceia[2]=new PieceF(montab.length);
-		pieceia[3]=new Piece4(montab.length);
-		pieceia[4]=new Piece4Inv(montab.length);
-		pieceia[5]=new PieceT(montab.length);
-		pieceia[6]=new PieceI(montab.length);
-		int []tabdepattern=new int[montab.length];
+		int[] coordBasGauche=new int[2];
+		int[] pieceEtSaRotation=new int[2];
+		int[][] game;
+		while((game=get_matrice())==null); //tente d'acceder à la matrice tant qu'elle ne peut pas
+		pieceia[0]=new PieceCarre(game.length);
+		pieceia[1]=new PieceL(game.length);
+		pieceia[2]=new PieceF(game.length);
+		pieceia[3]=new Piece4(game.length);
+		pieceia[4]=new Piece4Inv(game.length);
+		pieceia[5]=new PieceT(game.length);
+		pieceia[6]=new PieceI(game.length);
+		int []tabDePattern=new int[game.length]; // Un pattern par colonne
 		while(true){
-			montab=get_matrice();
-			if(montab==null)
-				continue;
-			int[] posistop=null;
+			while((game=get_matrice())==null);
+			int[] basGauche=null;
 			try{
-				posistop=matrice.get_coord();
+				basGauche=matrice.get_coord(); //recupere la position la plus bas à gauche de la pièce
 			}
 			catch(Exception e){
 				System.exit(0);
 			}
-			SurfaceIa.piece(posistop[0], posistop[1], montab, piecerotation);
-			SurfaceIa.rempliePattern(piecerotation[0], tabdepattern, montab);
-			pieceJeu=pieceia[piecerotation[0]-1];
-			pieceJeu.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(posistop[0], posistop[1], piecerotation[1], montab, 0);
-/*
-			for(int t=0; t<tabdepattern.length; t++){
-					System.out.println(tabdepattern[t]);
-				}
-*/
-			int[] retour={0,0};
-			SurfaceIa.getTheMaxiMenuBestOfPlusPlus(retour, piecerotation[0], pieceJeu, tabdepattern, montab);
-			int nbrotationafaire=SurfaceIa.nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee(piecerotation[0], piecerotation[1], retour[1]);
+			// Phase de depistage de la pièce
+			SurfaceIa.piece(basGauche[0], basGauche[1], game, pieceEtSaRotation);  // Trouve la piece en jeu par rapport a la coordonnée la plus basse puis à gauche et retourne la rotation dans laquel elle se trouve
+			if(pieceEtSaRotation[0]<=0){
+				System.out.println("Piece non reconnue");
+				continue;
+			}
+			//Phase de calcul du meilleur coup à jouer
+			pieceJeu=pieceia[pieceEtSaRotation[0]-1]; // choisit la piece avec laquel on va jouer :)
+			pieceJeu.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(basGauche[0], basGauche[1], pieceEtSaRotation[1], game, 0); // On efface la pièce du jeu pour eviter un calcul du jeu faussé
+			SurfaceIa.rempliePattern(pieceEtSaRotation[0], tabDePattern, game); // Remplie tabDePattern avec les patterns trouvées pour chaque colonne en fonction de la piece en cours
+			int[] emplacementEtRotation={0,0};
+			SurfaceIa.getTheMaxiMenuBestOfPlusPlus(emplacementEtRotation, pieceEtSaRotation[0], pieceJeu, tabDePattern, game); // calcul le meilleur coup
+			int nbrotationafaire=SurfaceIa.nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee(pieceEtSaRotation[0], pieceEtSaRotation[1], emplacementEtRotation[1]); //calcul le nombre de rotation pour passer de la rotation dans laquel la pièce ce trouve et celle désirée avec une rotation dans le sens des aiguilles d'une montre
 			send_key(3);
 			for(int i=0;i<nbrotationafaire;i++){
 				send_key(2);
-/*
-				my_sleep(1);
-*/
 			}
 			int gauche=0;
 			try{
 				gauche=matrice.getGauche();
 			}catch(Exception e){}
-			System.out.println(gauche);
-			if(gauche>retour[0])
-				for(;gauche>retour[0];gauche--)
+			if(gauche>emplacementEtRotation[0])
+				for(;gauche>emplacementEtRotation[0];gauche--)
 					send_key(1);
 			else
-				for(;gauche<retour[0 ];gauche++)
+				for(;gauche<emplacementEtRotation[0];gauche++)
 					send_key(0);
 			send_key(4);
 		}
-		// For Example
-		/*
-		String txt="0000030303333313131111122222222233333333333333333330000000202022222121211";
-		for (int j=0; j<txt.length(); j++) {	   
-			send_key((int)(txt.charAt(j)-'0'));
-			my_sleep(100);
-			display_matrice(get_matrice());
-		}
-		*/
     }
 } 

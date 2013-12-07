@@ -154,35 +154,35 @@ public abstract class Piece{
 			antirotation();
 		}
 		int minx=x[0],maxy=y[0];
-		for(int i=1; i<y.length; i++){
+		for(int i=1; i<x.length; i++){
 			if(maxy<y[i]){
-				minx=x[i];
 				maxy=y[i];
+				minx=x[i];
 			}
-			else
+			else{
 				if(maxy==y[i]){
 					if(minx>x[i])
 						minx=x[i];
 				}
-		}
-		if(minx>x2)
-			for(;minx>x2;minx--){
-				gauche();
-				if (collision(game))
-					return false;
-			}	
-		else{
-				for(;minx<x2;minx++){
-					droite();
-				if (collision(game))
-					return false;
 			}
 		}
-		int combienDescendre=y2-maxy;
-		for (int i=0;i<combienDescendre;i++){
-			tomberPiece();
-			if (collision(game))
+		while(minx>x2){
+			gauche();
+			if(collision(game))
 				return false;
+			minx--;
+		}
+		while(minx<x2){
+			droite();
+			if(collision(game))
+				return false;
+			minx++;
+		}
+		while(maxy<x2){
+			tomberPiece();
+			if(collision(game))
+				return false;
+			maxy++;
 		}
 		return true;
 	}
