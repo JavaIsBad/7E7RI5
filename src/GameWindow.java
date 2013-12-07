@@ -8,8 +8,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class GameWindow extends JPanel {
-
-    final int taillex=320, tailley=500;
+	private boolean gameover=false;
+	private int score=0;
+	final int textArea=160;
+    final int taillex=320, tailley=500; //320 500
+    final int textYpos=tailley/2;
     final int taillecarrex=taillex/10, taillecarrey=tailley/20;
     final int bords=taillecarrex;
     BufferedImage background=null, piece=null;
@@ -20,7 +23,10 @@ public class GameWindow extends JPanel {
     { int x,y;
         int posx, posy=bords;
         g.drawImage(background, bords, bords, bords+taillex, bords+tailley, 0, 0, background.getWidth(), background.getHeight(), null);
+        g.setColor(Color.BLACK);
+        g.fillRect(bords+taillex+textArea/3-10, textYpos-15, textArea, 25);
         g.setColor(Color.WHITE);
+        g.drawString("Score : "+score, bords+taillex+textArea/3, textYpos);
         for(int i=bords+taillecarrex; i<bords+taillex; i+=taillecarrex)
             g.drawLine(i, bords, i, bords+tailley);
         g.setColor(Color.BLACK);
@@ -28,9 +34,9 @@ public class GameWindow extends JPanel {
         g.drawLine(bords-1, bords-1, bords-1, bords+tailley+1);
         g.drawLine(bords+taillex, bords-1, bords+taillex, bords+tailley);
         g.drawLine(bords-1, bords+tailley, bords+taillex, bords+tailley);
-        for (y=0;y<matrice.sizeY;y++) {
+        for (y=0;y<matrice.sizeY;y++){
             posx=bords;
-            for (x=0;x<matrice.sizeX;x++) {
+            for (x=0;x<matrice.sizeX;x++){
                 if (matrice.isSomething(x,y)) {
                     g.setColor(CouleurTetris.getCouleur(matrice.get(x,y)));
                     g.fillRect(posx, posy, taillecarrex, taillecarrey);
@@ -39,20 +45,29 @@ public class GameWindow extends JPanel {
             }
             posy+=taillecarrey;
         }
+        if(gameover){
+			  g.setColor(Color.BLACK);
+			  g.fillRect(taillex/2+bords-30, tailley/2-30+bords, 160, 80);
+			  g.setColor(Color.RED);
+			  g.drawString("GAME OVER", taillex/2+bords+15, tailley/2+bords+15);
+		}
     }
 
-    public void refresh()
+    public void refresh(int score)
     {
-/*
-        matrice.refresh();
-*/
+		this.score=score;
         repaint(getVisibleRect());
     }
 
+	public void gameOver(){
+		gameover=true;
+		repaint(getVisibleRect());
+	}
+	
     public GameWindow(Matrice m)
     {
         super();
-        setPreferredSize(new Dimension(taillex+2*bords, tailley+2*bords));
+        setPreferredSize(new Dimension(taillex+2*bords+textArea, tailley+2*bords));
         setBackground(Color.WHITE);
         matrice = m;
         try{

@@ -482,37 +482,65 @@ public class SurfaceIa{
 		}
 	}
 	
+	private static int calculerCoutPourPattern(int[] tabdepattern, Piece piece, int [][]game){
+		// plus on fait de lignes plus on renvoit un score élevée sinon si rien de special renvoit -1
+		// on renvoit le numero de la pattern qui fait le plus de ligne en gros
+		return -1;
+	}
 	
-	public static void getTheMaxiMenuBestOfPlusPlus(int[] retour,int nb, Piece piece, int[] tabdepattern, int[][] game){
+	public static void getTheMaxiMenuBestOfPlusPlus(int[] retour, int pieceNumber, Piece piece, int[] tabdepattern, int[][] game){
 		retour[0]=0;
 		retour[1]=0;
-		int scoremax=-999999999;
 		boolean usePattern=false;
 		int i=0;
-		int colonnemax=0;
-		int scoreintermed=0;
-		int moyenneDuJeu=hauteurMoyenne(game)+3; // +3 pour compenser si tout le jeu est a la même hauteur np
-		System.out.println("Hauteur Moyenne"+moyenneDuJeu);
-		while(i<tabdepattern.length){ //parcour des patterns
-			if(tabdepattern[i]>0 && hauteurColonne(game,i)<=moyenneDuJeu){ //S'il existe une pattern pour la pièce et si la pattern ne se situe pas trop haut dans le jeu
-				usePattern=true;
-				int rotationAfaire=rotationPourPattern(nb, tabdepattern[i]); // le nombre de rotation a faire pour être pareil que le pattern
-				int hauteurMaxAvant=hauteurMax(game);
-				int positionPlusBas=plusbasDansColonne(i, game);
-				if (piece.peuxArriverOuIlVeut(i, positionPlusBas, rotationAfaire, game)){
-						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i, positionPlusBas, rotationAfaire, game, 1);
-						scoreintermed=calculerCout(game, hauteurMaxAvant, i);
-						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i, positionPlusBas, rotationAfaire, game, 0);
-						if(scoremax<scoreintermed){
-							scoremax=scoreintermed;
-							retour[0]=i;
-							retour[1]=rotationAfaire;
-						}
-	 			}
+		int moyenneDuJeu=game[0].length;//hauteurMoyenne(game)+3; // +3 pour compenser si tout le jeu est a la même hauteur np <===== ++--***##IMPORTANT##***--++ remettre hauteurMoyenne(game)+3 quand fini test
+		while(i<tabdepattern.length){ // on vire les patterns qui font trop monter le jeu
+			if(tabdepattern[i]>0 // si pattern valide
+			&& hauteurColonne(game,i)>=moyenneDuJeu // et pas trop haut
+			&& !piece.peuxArriverOuIlVeut(i, plusbasDansColonne(i,game) , rotationPourPattern(pieceNumber, tabdepattern[i]), game) // et qu'on peut placer la pièce 
+			){
+				tabdepattern[i]=-1;
+			}
+			else{
+				if(tabdepattern[i]>0){
+					usePattern=true;
+				}
 			}
 			i++;
 		}
-		if(!usePattern){ //paspattern
+		if(usePattern){ // s'il reste des patterns
+			System.out.println("Utilisation de pattern");
+			i=0;
+			int best=calculerCoutPourPattern(tabdepattern, piece, game);
+			if(best==-1){ //aucun n'est special on place le plus bas possible
+				int minpattern=-1;
+				int hauteurMinPattern=0;
+				while(i<tabdepattern.length){ //parcour des patterns
+					if(tabdepattern[i]>0){ // si le pattern est cool
+						if(minpattern==-1){ //si pas de min pour le moment
+							hauteurMinPattern=hauteurColonne(game,i);
+							minpattern=i;
+						}
+						else{
+							int hauteurAutrePattern=hauteurColonne(game,i);
+							if(hauteurAutrePattern<hauteurMinPattern){
+								hauteurMinPattern=hauteurAutrePattern;
+								minpattern=i;
+							}
+						}
+					}
+					i++;
+				}
+				retour[0]=minpattern;
+				retour[1]=rotationPourPattern(pieceNumber, tabdepattern[minpattern]);
+
+			}
+			else{
+				retour[0]=best;
+				retour[1]=rotationPourPattern(pieceNumber, tabdepattern[best]);
+			}
+		}
+		else{ //paspattern
 			System.out.println("Par defaut");
 			parDefaut(retour, piece, game);
 		}

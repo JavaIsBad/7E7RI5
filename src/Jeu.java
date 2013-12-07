@@ -69,7 +69,7 @@ public class Jeu {
             if(collision(pieceEnCours))
                 pieceEnCours.gauche();
             pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-            gamewindow.refresh();
+            gamewindow.refresh(Points);
         }
     }
 
@@ -81,7 +81,7 @@ public class Jeu {
             if(collision(pieceEnCours))
                 pieceEnCours.droite();
             pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-            gamewindow.refresh();
+            gamewindow.refresh(Points);
         }
     }
 
@@ -93,7 +93,7 @@ public class Jeu {
             if(collision(pieceEnCours))
                 pieceEnCours.rotationner();
             pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-            gamewindow.refresh();
+            gamewindow.refresh(Points);
             gaucheGauche();
         }
     }
@@ -111,7 +111,7 @@ public class Jeu {
             }
             else{
                 pieceEnCours.dessinerPiece(matrice, couleurEnCours);
-                gamewindow.refresh();
+                gamewindow.refresh(Points);
             }
         }
     }
@@ -200,7 +200,13 @@ public class Jeu {
     private void finDuJeu(){
         System.out.println("Nombre de lignes détruites : "+cptLigne);
         System.out.println("Nombre de points : "+Points);
-        System.exit(0);
+        gamewindow.gameOver();
+        timer=new Timer();
+        timer.schedule(new TimerTask() {
+                public void run() {
+                    System.exit(0);
+                }
+            }, 5000);
     }
 
     public void itsShowTime(){ // fonction du jeu
@@ -209,8 +215,11 @@ public class Jeu {
         pieceEnCours=piecejeu[random];
         pieceEnCours.reinit();
         couleurEnCours=random+1;
-        if(collision(pieceEnCours))
+        if(collision(pieceEnCours)){
+			timer.cancel();
+            pieceEnCours=null;
             finDuJeu();
+		}
         pieceEnCours.dessinerPiece(matrice, couleurEnCours);
         if(vitesse!=250 && vitesse!=(750-50*(cptLigne/10))){
             vitesse=750-50*(cptLigne/10);
@@ -227,7 +236,7 @@ public class Jeu {
         basGauche(matrice.positionPiece);
         gaucheGauche();
         matrice.refresh();
-        gamewindow.refresh();
+        gamewindow.refresh(Points);
     }
     
     public void gaucheGauche(){

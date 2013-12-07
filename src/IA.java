@@ -78,7 +78,7 @@ public class IA {
     public static void main(String[] args) throws AWTException, IOException {
 		try {
                      robot = new Robot();
-                     robot.setAutoDelay(50); // 100 ms
+                     robot.setAutoDelay(60); // 10 ms
                      robot.setAutoWaitForIdle(false);
         } catch (AWTException ex) {
                    Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,7 +126,8 @@ public class IA {
 			int[] emplacementEtRotation={0,0};
 			SurfaceIa.getTheMaxiMenuBestOfPlusPlus(emplacementEtRotation, pieceEtSaRotation[0], pieceJeu, tabDePattern, game); // calcul le meilleur coup
 			int nbrotationafaire=SurfaceIa.nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee(pieceEtSaRotation[0], pieceEtSaRotation[1], emplacementEtRotation[1]); //calcul le nombre de rotation pour passer de la rotation dans laquel la pièce ce trouve et celle désirée avec une rotation dans le sens des aiguilles d'une montre
-			send_key(3);
+			if(nbrotationafaire!=0)
+				send_key(3);
 			for(int i=0;i<nbrotationafaire;i++){
 				send_key(2);
 			}

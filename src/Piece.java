@@ -146,11 +146,11 @@ public abstract class Piece{
 	
 	public boolean peuxArriverOuIlVeut(int x2, int y2, int rotate, int[][] game){
 		reinit();
-		tomberPiece();
 		if (collision(game)){
 			return false;
 		}
-		tomberPiece();
+		if(rotate!=rotation)
+			tomberPiece();
 		while(rotate!=rotation){
 			antirotation();
 		}
@@ -179,7 +179,7 @@ public abstract class Piece{
 				return false;
 			minx++;
 		}
-		while(maxy<x2){
+		while(maxy<y2){
 			tomberPiece();
 			if(collision(game))
 				return false;
