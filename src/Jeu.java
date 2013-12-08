@@ -32,7 +32,7 @@ public class Jeu {
     
     /**
      * Renvoit la position du plus bas gauche de la pièce en cours
-     * @param Un tableau a 2 champs, le premier contiendra x et l'autre y
+     * @param coord Un tableau a 2 champs, le premier contiendra x et l'autre y
      */
     
     public void basGauche(int[] coord){

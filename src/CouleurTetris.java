@@ -13,7 +13,7 @@ public class CouleurTetris {
 };
 	/**
 	 * Retourne la couleur associée à l'entier
-	 * @param La couleur représenté par un entier
+	 * @param couleur La couleur représenté par un entier
 	 * @return La couleur Color associé
 	 */
 	public static Color getCouleur(int couleur){

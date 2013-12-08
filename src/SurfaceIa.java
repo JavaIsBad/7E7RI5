@@ -157,7 +157,7 @@ public class SurfaceIa{
     }
 	/**
 	 * Remplit le tableau de pattern passé en parametre
-	 * @param piece Le numero de la pièce
+	 * @param piecenbr Le numero de la pièce
 	 * @param x La coordonné du plus a gauche du plus en bas des cubes
 	 * @param y La coordonné la plus basse
 	 * @param game La grille de jeu
@@ -718,7 +718,6 @@ public class SurfaceIa{
 	 * @param pieceNumber Le numero de la pièce
 	 * @param piece La piece a placer
 	 * @param game La matrice de jeu
-	 * @return l'emplacement le plus optimal
 	 */
 
 	public static void getTheMaxiMenuBestOfPlusPlus(int[] retour, int pieceNumber, Piece piece, int[] tabdepattern, int[][] game){
