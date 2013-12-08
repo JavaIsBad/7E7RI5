@@ -396,9 +396,9 @@ public class SurfaceIa{
 			int cpt=0;
 			int cmpteur;
 			int i,j;
-			for (j=0;j<m[0].length;j++){
+			for (j=0; j<m[0].length; j++){
 				cmpteur=0;
-				for (i=0; i<m.length;i++){
+				for (i=0; i<m.length; i++){
 					if (m[i][j]>=1)
 					cmpteur++;
 				}
@@ -482,10 +482,25 @@ public class SurfaceIa{
 		}
 	}
 	
-	private static int calculerCoutPourPattern(int[] tabdepattern, Piece piece, int [][]game){
-		// plus on fait de lignes plus on renvoit un score élevée sinon si rien de special renvoit -1
-		// on renvoit le numero de la pattern qui fait le plus de ligne en gros
-		return -1;
+	private static int calculerCoutPourPattern(int[] tabdepattern, int piecenbr, Piece piece, int [][]game){
+		int casseleplus=-1;
+		int aToutCasse=0;
+		int i=0;
+		while(i<tabdepattern.length){
+			if(tabdepattern[i]>0){
+				int plusBas=plusbasDansColonne(i, game);
+				if(piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i, plusBas, rotationPourPattern(piecenbr, tabdepattern[i]), game, 1)){
+					int casse=compte_lignes_finies(game);
+					if(casse>aToutCasse){
+						casseleplus=i;
+						aToutCasse=casse;
+					}
+					piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i, plusBas, rotationPourPattern(piecenbr, tabdepattern[i]), game, 0);
+				}
+			}
+			i++;
+		}
+		return casseleplus;
 	}
 	
 	public static void getTheMaxiMenuBestOfPlusPlus(int[] retour, int pieceNumber, Piece piece, int[] tabdepattern, int[][] game){
@@ -511,7 +526,7 @@ public class SurfaceIa{
 		if(usePattern){ // s'il reste des patterns
 			System.out.println("Utilisation de pattern");
 			i=0;
-			int best=calculerCoutPourPattern(tabdepattern, piece, game);
+			int best=calculerCoutPourPattern(tabdepattern, pieceNumber, piece, game);
 			if(best==-1){ //aucun n'est special on place le plus bas possible
 				int minpattern=-1;
 				int hauteurMinPattern=0;
@@ -533,7 +548,6 @@ public class SurfaceIa{
 				}
 				retour[0]=minpattern;
 				retour[1]=rotationPourPattern(pieceNumber, tabdepattern[minpattern]);
-
 			}
 			else{
 				retour[0]=best;

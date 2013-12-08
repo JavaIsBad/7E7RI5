@@ -153,6 +153,9 @@ public abstract class Piece{
 			tomberPiece();
 		while(rotate!=rotation){
 			antirotation();
+			if (collision(game)){
+				return false;
+			}
 		}
 		int minx=x[0],maxy=y[0];
 		for(int i=1; i<x.length; i++){
@@ -179,11 +182,12 @@ public abstract class Piece{
 				return false;
 			minx++;
 		}
-		while(maxy<y2){
+		int combienDescendre=y2-maxy;
+		while(combienDescendre!=0){
 			tomberPiece();
 			if(collision(game))
 				return false;
-			maxy++;
+			combienDescendre--;
 		}
 		return true;
 	}
