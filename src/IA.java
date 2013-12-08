@@ -10,10 +10,20 @@ import java.rmi.* ;
 import java.net.MalformedURLException ; 
 import java.util.*; 
 
+/**
+ * Classe de l'IA
+ */
+
 public class IA {
+	/// La matrice à laquel on se connect
     static MatriceInterface matrice;
+    /// Un robot qui envoie les touches
 	static Robot robot;
 
+/**
+ * Dort ms millisecondes
+ * @param ms Le temps en millisecondes
+ */
     static void my_sleep(int ms)
     {
 	try {
@@ -22,6 +32,11 @@ public class IA {
 	    Thread.currentThread().interrupt();
 	}
     }
+  
+  /**
+   * Lance le programme exec
+   * @param exec Le nom du programme
+   */
     
     static public void run(String exec)
     {
@@ -33,7 +48,12 @@ public class IA {
 	    Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
 	}
     }
-    
+   
+   /**
+    * Envoit une touche à la fenêtre
+    * @param key La touche à envoyer
+    */ 
+   
     public static void send_key(int key) 
     { int k=0;
 	switch (key) {
@@ -46,24 +66,11 @@ public class IA {
 	robot.keyPress(k);
 	robot.keyRelease(k); 	        
     }
-
-
-    public static void display_matrice(int t[][])
-    {   int x,y;
-	System.out.println("Matrice vue par la IA : ");
-	for (y=0;y<20;y++) {
-	    for (x=0;x<10;x++) {
-		if (t[x][y]!=0) {
-		    System.out.print("[]");
-		} else {
-		    System.out.print("--");
-		}		
-	    }
-	    System.out.println("");
-	}
-    }
-
-
+	/**
+	 * Recoit la matrice de jeu
+	 * @return La matrice de jeu
+	 */
+	 
     public static int[][] get_matrice()
     { int [][] result=null;
 	try {
@@ -74,11 +81,13 @@ public class IA {
 	} catch (RemoteException re) {System.exit(0);}
 	return result;
     }
-    
+    /**
+     * La fonction main
+     */
     public static void main(String[] args) throws AWTException, IOException {
 		try {
                      robot = new Robot();
-                     robot.setAutoDelay(60); // 10 ms
+                     robot.setAutoDelay(60);
                      robot.setAutoWaitForIdle(false);
         } catch (AWTException ex) {
                    Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);

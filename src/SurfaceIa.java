@@ -8,59 +8,161 @@
  * pièce 6 : T
  * pièce 7 : I
  */
+ 
+ /**
+  * Classe de test Ia et Surface
+  */
+ 
 public class SurfaceIa{
 
+/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
     private static boolean s1(int x, int y, int[][] game){
         return x+1< game.length && game[x][y]==0 && game[x+1][y]==0 && (y+1==game[0].length || game[x][y+1]!=0 && game[x+1][y+1]!=0);
     }
+/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s2(int x, int y, int[][] game){
         return x+2< game.length && y-1>=0 && game[x][y]==0 && game[x+1][y-1]==0 && game[x+2][y-1]==0 && game[x][y-1]==0 && (y+1==game[0].length || game[x][y+1]!=0) && game[x+1][y]!=0 && game[x+2][y]!=0;
     }
+/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s3(int x, int y, int[][] game){
         return x+1< game.length && y+2<game[0].length && game[x][y]==0 && game[x+1][y+1]==0 && game[x+1][y+2]==0 && game[x+1][y]==0 && (y+3==game[0].length || game[x+1][y+3]!=0) && game[x][y+1]!=0 && game[x][y+2]!=0;
     }
+	/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s4(int x, int y, int[][] game){
         return x+2< game.length && game[x][y]==0 && game[x+1][y]==0 && game[x+2][y]==0 && (y+1==game[0].length || game[x][y+1]!=0 && game[x+1][y+1]!=0 && game[x+2][y+1]!=0);
     }
+	/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s5(int x, int y, int[][] game){
         return x+2< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+2][y+1]==0 && game[x+2][y]==0 && (y+2==game[0].length || game[x+2][y+2]!=0) && game[x][y+1]!=0 && game[x+1][y+1]!=0;
     }
+	/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s6(int x, int y, int[][] game){
         return x+1< game.length && y-2>=0 && game[x][y]==0 && game[x][y-1]==0 && game[x][y-2]==0 && game[x+1][y-2]==0 && (y+1==game[0].length || game[x][y+1]!=0) && game[x+1][y]!=0 && game[x+1][y-1]!=0;
     }
+/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s7(int x, int y, int[][] game){
         return x+2< game.length && y-1>=0 && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y-1]==0 && game[x+2][y-1]==0 && (y+1==game[0].length ||game[x][y+1]!=0 && game[x+1][y+1]!=0) && game[x+2][y]!=0 ;
     }
+	/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s8(int x, int y, int[][] game){
         return x+1< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y+1]==0 && (y+2==game[0].length || game[x+1][y+2]!=0) && game[x][y+1]!=0;
     }
+/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s9(int x, int y, int[][] game){
         return x+2< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y+1]==0 && game[x+2][y+1]==0 && (y+2==game[0].length || game[x+1][y+2]!=0 && game[x+2][y+2]!=0) && game[x][y+1]!=0;
     }
-
+/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
     private static boolean s10(int x, int y, int[][] game){
         return x+1< game.length && y-1>=0 && game[x][y]==0 && game[x][y-1]==0 && game[x+1][y-1]==0 && (y+1==game[0].length || game[x][y+1]!=0) && game[x+1][y]!=0;
     }
+	/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s11(int x, int y, int[][] game){
         return x+2< game.length && y+1<game[0].length && game[x][y]==0 && game[x+1][y]==0 && game[x+1][y+1]==0 && game[x+2][y]==0 && (y+2==game[0].length || game[x+1][y+2]!=0) && game[x+2][y+1]!=0 && game[x][y+1]!=0;
     }
-
+	/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	*/
     private static boolean s12(int x, int y, int[][] game){
         return x+3< game.length && game[x][y]==0 && game[x+1][y]==0&& game[x+2][y]==0 && game[x+3][y]==0 && (y+1==game[0].length || game[x][y+1]!=0 && game[x+1][y+1]!=0 && game[x+2][y+1]!=0 && game[x+3][y+1]!=0);
     }
+	/**
+	 * Renvoit vrai si le pattern est le bon
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @return vrai si possible false sinon
+	 */ 
 
     private static boolean s13(int x, int y, int[][] game){
         return game[x][y]==0 && (y+1==game[0].length || game[x][y+1]!=0);
     }
+	/**
+	 * Remplit le tableau de pattern passé en parametre
+	 * @param piece Le numero de la pièce
+	 * @param x La coordonné du plus a gauche du plus en bas des cubes
+	 * @param y La coordonné la plus basse
+	 * @param game La grille de jeu
+	 * @param retour Le tableau de pattern rempli avec celui trouvé si possible sinon -1
+	 */ 
 
     public static void isMatchingPattern(int piecenbr, int x, int y, int [][] game, int []retour){
 		boolean boo;
@@ -193,7 +295,13 @@ public class SurfaceIa{
 				break;
 		}
 	}
-	
+	/**
+	 * Renvoit le point le plus bas dans une colonne donnée
+	 * @param x La colonne observée
+	 * @param game La grille de jeu
+	 * @return La valeur du point le plus bas
+	 */ 
+
 	public static int plusbasDansColonne(int x, int[][] game){
 		int enbas=game[x].length-1;
 		for(int i=enbas; i>0; i--)
@@ -201,6 +309,14 @@ public class SurfaceIa{
 				enbas=i-1;
 		return enbas;
 	}
+	
+	/**
+	 * Remplit le tableau de pattern pour tout le jeu
+	 * @param piece Le numero de la pièce
+	 * @param patternitude Le tableau de pattern
+	 * @param game La grille de jeu
+	 */ 
+
 	
 	public static void rempliePattern (int piece, int [] patternitude, int[][] game){
 		int y;
@@ -211,6 +327,14 @@ public class SurfaceIa{
 			patternitude[i]=pattern[0];   // a changer si possible
 		}
 	}
+	
+	/**
+	 * Remplit le tableau pieceAndRotation avec en premier champ le numero de la pièce et en deuxieme la valeur de la rotation
+	 * @param x le point le plus a gauche de la pièce
+	 * @param y le point le plus bas de la piece
+	 * @param game La grille de jeu
+	 * @param pieceAndRotation Le tableau a remplir.
+	 */ 
 	
 	public static void piece(int x, int y, int[][] game, int[] pieceAndRotation){
 		PieceCarre.isMe(x, y, game, pieceAndRotation);
@@ -250,6 +374,14 @@ public class SurfaceIa{
 		}
 	}
 	
+	/**
+	 * Retourne le nombre de rotation à faire pour passer d'un état à l'autre
+	 * @param piece Le numero de la pièce
+	 * @param rotationDepart Le statut actuel de la pièce
+	 * @param rotationFin Le statut final de la pièce
+	 * @return Le nombre de rotation à faire pour passer d'un état à l'autre
+	 */ 
+	
 	public static int nombreDeRotationsAFairePourPasserDuneRotationALaBonneRotationPourUnePieceDonnee (int piece, int rotationDepart, int rotationFin){
 		int nbrotation=0;
 		if(piece==4 || piece==5 || piece==7){
@@ -266,7 +398,12 @@ public class SurfaceIa{
 		}
 		return nbrotation;
 	}
-	
+	/**
+	 * Retourne le nombre de rotation à faire pour passer dans l'état du pattern 
+	 * @param piece Le numero de la pièce
+	 * @param pattern Le pattern a faire
+	 * @return Le nombre de rotation à faire pour passer dans l'état du pattern 
+	 */ 
 	public static int rotationPourPattern(int piece, int pattern){
 		int valret=0;
 		switch(piece){
@@ -355,6 +492,12 @@ public class SurfaceIa{
 		return valret;
 	}
 	
+	/**
+	 * La hauteur de la colonne
+	 * @param game La matrice de jeu
+	 * @param colonne La colonne à observer
+	 * @return La hauteur de la colonne
+	 */ 
 	
 	private static int hauteurColonne(int [][]game, int colonne){
 		int ligneDebut=-1;
@@ -369,7 +512,12 @@ public class SurfaceIa{
 		return game[0].length-ligneDebut;
 	
 	}
-	
+	/**
+	 * La hauteur moyenne du jeu
+	 * @param game La matrice de jeu
+	 * @return La hauteur moyenne du jeu
+	 */ 
+
 	private static int hauteurMoyenne(int[][] game){
 		int moyenne=0;
 		for (int i=0;i<game.length;i++){
@@ -377,7 +525,11 @@ public class SurfaceIa{
 		}
 		return (moyenne/game[0].length);
 	}
-	
+	/**
+	 * La hauteur max du jeu
+	 * @param game La matrice de jeu
+	 * @return La hauteur max du jeu
+	 */ 
 	private static int hauteurMax(int[][] game){
 		int max=0;
 		for (int i=0;i<game.length;i++){
@@ -389,7 +541,7 @@ public class SurfaceIa{
 	
 	/**
  * Compte le nombre de lignes finies dans un tableau a 2 dimensions
- * @param m, un tableau a 2 dimensions
+ * @param m un tableau a 2 dimensions
  * @return un entier
  */
 	private static int compte_lignes_finies(int[][] m){
@@ -410,8 +562,8 @@ public class SurfaceIa{
 
 /**
  * Compte le nombre de trous dans une colonne
- * @param mat, un tableau a 2 dimensions
- * @param colonne, une colonne
+ * @param mat un tableau a 2 dimensions
+ * @param colonne une colonne
  * @return un entier
  */
     private static int nbtrou(int[][] game,int colonne){
@@ -426,10 +578,10 @@ public class SurfaceIa{
         
 /**
  * Compte le nombre de trous dans un tableau a 2 dimensions
- * @param mat, un tableau a 2 dimensions
- * @param pieceEnCours, une Piece
- * @param colonne, une colonne
- * @param rotation, une rotation
+ * @param mat Un tableau a 2 dimensions
+ * @param pieceEnCours Une Piece
+ * @param colonne Une colonne
+ * @param rotation Une rotation
  * @return un entier
  */
         private static int compter_trou(int[][] m){
@@ -440,19 +592,51 @@ public class SurfaceIa{
         return nbretrou;
         }
        
-	
-	private static int calculerCout(int [][]game, int hauteurMaxAvant, int positionPiece){
-		int hauteurMax=hauteurMax(game); //hauteur Max du jeu
-		int hauteurMoy=hauteurMoyenne(game); //hauteur Moyenne du jeu
-		int lignesRemplies=compte_lignes_finies(game); //Nombre de lignes remplies
-		int nombreTrous=compter_trou(game); //Nombre de trous
-		int finalvalue=0;
-		if (lignesRemplies==4)
-			return 10000000;
-		finalvalue= 40*lignesRemplies-(hauteurMax-hauteurMaxAvant)*32-36*hauteurColonne(game,positionPiece); 
-		return 1;
+	/**
+	 * Calcul par defaut de la position a placer
+	 * @param retour Premier champ contenant le numero de la colonne et le deuxième celui de la rotation
+	 * @param piece La piece a placer
+	 * @param game La matrice de jeu
+	 */
+	private static void parDefautbis(int[]retour, Piece piece, int[][] game){
+		int minpos=game[0].length;
+		int ligne=0;
+		int posligne=0;
+		int rotateligne=0;
+		int maxRotate=piece.getrotation();
+		for (int i=0;i<game.length;i++){
+			   for (int j=0; j<maxRotate; j++){
+				   int positionPlusBas=plusbasDansColonne(i,game);
+				   while(positionPlusBas>=0 && !piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1)){
+						positionPlusBas--;
+					}
+					int lignedone=compte_lignes_finies(game); 
+					if(lignedone>ligne){
+						ligne=lignedone;
+						posligne=i;
+						rotateligne=j;
+					}
+					else{
+						if(positionPlusBas<minpos){
+							minpos=positionPlusBas;
+							retour[0]=i;
+							retour[1]=j;
+						}
+					}
+					piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,0);
+				}
+		}
+		if(ligne>0){
+			retour[0]=posligne;
+			retour[1]=rotateligne;
+		}
 	}
-	
+	/**
+	 * Calcul par defaut de la position a placer
+	 * @param retour Premier champ contenant le numero de la colonne et le deuxième celui de la rotation
+	 * @param piece La piece a placer
+	 * @param game La matrice de jeu
+	 */
 	
 	private static void parDefaut(int[]retour, Piece piece, int[][] game){
 	   int maxRotate=piece.getrotation();
@@ -464,8 +648,10 @@ public class SurfaceIa{
 	   for (int i=0;i<game.length;i++){
 		   for (int j=0; j<maxRotate; j++){
 			   int positionPlusBas=plusbasDansColonne(i,game);
+			   while(positionPlusBas>=0 && !piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1)){
+					positionPlusBas--;
+				}
 			   if(piece.peuxArriverOuIlVeut(i, positionPlusBas, j, game)){
-				   piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1);
 				   int comptertrou=compter_trou(game);
 				   int ligne=compte_lignes_finies(game);
 				   if (ligne>test){ //Si tu peux faire des lignes, tu les fais et tu prends le plus grand nbre de ligne
@@ -485,8 +671,9 @@ public class SurfaceIa{
 								   hauteurmax=hauteurMax(game);
 						   }
 				   }
-				   piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,0);
-			   }
+			}
+			piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,0);
+			   
 		   }
 	   }
 	   if (subi!=-1){
@@ -494,7 +681,15 @@ public class SurfaceIa{
 			   retour[1]=subj;
 	   }
    }
-	
+	/**
+	 * Calcul le cout optimal pour placer un pattern
+	 * @param tabdepattern Le tableau de pattern valide
+	 * @param piecenbr Le numero de la pièce
+	 * @param piece La piece a placer
+	 * @param game La matrice de jeu
+	 * @return l'emplacement le plus optimal
+	 */
+
 	private static int calculerCoutPourPattern(int[] tabdepattern, int piecenbr, Piece piece, int [][]game){
 		int casseleplus=-1;
 		int aToutCasse=0;
@@ -513,18 +708,28 @@ public class SurfaceIa{
 			}
 			i++;
 		}
-		return casseleplus;
+		return -1;
 	}
 	
+	/**
+	 * Calcul le placement optimal de placement de la piece dans le jeu
+	 * @param retour Dans le premier champ la position optimal et le deuxieme la rotation
+	 * @param tabdepattern Le tableau de pattern valide
+	 * @param pieceNumber Le numero de la pièce
+	 * @param piece La piece a placer
+	 * @param game La matrice de jeu
+	 * @return l'emplacement le plus optimal
+	 */
+
 	public static void getTheMaxiMenuBestOfPlusPlus(int[] retour, int pieceNumber, Piece piece, int[] tabdepattern, int[][] game){
 		retour[0]=0;
 		retour[1]=0;
 		boolean usePattern=false;
 		int i=0;
-		int moyenneDuJeu=game[0].length;//hauteurMoyenne(game)+3; // +3 pour compenser si tout le jeu est a la même hauteur np <===== ++--***##IMPORTANT##***--++ remettre hauteurMoyenne(game)+3 quand fini test
+		int moyenneDuJeu=hauteurMoyenne(game)+5; // +3 pour compenser si tout le jeu est a la même hauteur np <===== ++--***##IMPORTANT##***--++ remettre hauteurMoyenne(game)+3 quand fini test
 		while(i<tabdepattern.length){ // on vire les patterns qui font trop monter le jeu
 			if(tabdepattern[i]>0 // si pattern valide
-			&& hauteurColonne(game,i)>=moyenneDuJeu // et pas trop haut
+			//&& hauteurColonne(game,i)>=moyenneDuJeu // et pas trop haut
 			&& !piece.peuxArriverOuIlVeut(i, plusbasDansColonne(i,game) , rotationPourPattern(pieceNumber, tabdepattern[i]), game) // et qu'on peut placer la pièce 
 			){
 				tabdepattern[i]=-1;

@@ -1,19 +1,39 @@
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Color;
-public class Jeu {
 
+/**
+ * classe du Jeu
+ */
+
+public class Jeu {
+	/// Les points
     private static final int[] points={0, 40, 100, 300, 1200};
+	/// Les pieces
     private Piece[] piecejeu;
+    /// La couleur de la piece
     private int couleurEnCours;
+    /// La pièce en cours
     private Piece pieceEnCours;
+    /// La matrice de jeu
     private Matrice matrice;
+    /// La fenêtre de jeu
     private GameWindow gamewindow;
+    /// Le nombre de points et lignes cassées
     private int Points=0,cptLigne;
+    /// Le timer pour faire descendre la pièce
     private Timer timer=null;
+    /// Une tache a répéter
     private TimerTask task;
+    /// La vitesse du jeu
     private int vitesse=0;
+    /// Si pause ou non
     private boolean pause=false;
+    
+    /**
+     * Renvoit la position du plus bas gauche de la pièce en cours
+     * @param Un tableau a 2 champs, le premier contiendra x et l'autre y
+     */
     
     public void basGauche(int[] coord){
 		int[]x=pieceEnCours.getX();
@@ -34,6 +54,13 @@ public class Jeu {
 		coord[1]=maxy;
 	}
 
+	/**
+	 * Constructeur du jeu
+	 * @param pj Les pièces utilisées dans le jeu
+	 * @param m La matrice de jeu
+	 * @param gw La fenêtre de jeu
+	 */
+
     public Jeu(Piece[] pj, Matrice m, GameWindow gw){
         if(pj!=null && m!=null && gw!=null){
             piecejeu=pj;
@@ -43,6 +70,10 @@ public class Jeu {
         else
             System.exit(1);
     }
+
+	/**
+	 * Lance la pause
+	 */
 
     public synchronized void action_pause(){
         if(!pause){
@@ -60,7 +91,9 @@ public class Jeu {
         }
     }
 
-
+/**
+ * deplace la pièce à droite
+ */
     public synchronized void action_right()
     {
         if(!pause){
@@ -72,7 +105,9 @@ public class Jeu {
             gamewindow.refresh(Points);
         }
     }
-
+/**
+ * deplace la pièce à gauche
+ */
     public synchronized void action_left()
     {
         if(!pause){
@@ -84,7 +119,9 @@ public class Jeu {
             gamewindow.refresh(Points);
         }
     }
-
+/**
+ * effectue la rotation da la pièce
+ */
     public synchronized void action_rotation()
     {
         if(!pause){
@@ -97,7 +134,9 @@ public class Jeu {
             gaucheGauche();
         }
     }
-
+/**
+ * Fait tomber la pièce en bas
+ */
     public synchronized void action_fall()
     {
         if(!pause){
@@ -115,7 +154,9 @@ public class Jeu {
             }
         }
     }
-
+/**
+ * Fait tomber la piece tout en bas
+ */
     public synchronized void action_tomber(){
         if(!pause){
             pieceEnCours.effacerPiece(matrice);
@@ -188,6 +229,12 @@ public class Jeu {
         return compterPoints(cpt);
     }
 
+	/**
+	 * Test si la pièce est en collision
+	 * @param P La piece à tester
+	 * @return Vrai si elle est en collision faux sinon
+	 */
+
     public boolean collision(Piece P){
         boolean colli=true;
         int x[]=P.getX();
@@ -196,6 +243,10 @@ public class Jeu {
             colli= colli && !(x[i]>= matrice.sizeX || x[i] < 0 || y[i] >= matrice.sizeY || y[i] < 0 || (matrice.isSomething(x[i],y[i])));
         return !colli;
     }
+    
+    /**
+     * Fonction mettant fin au jeu
+     */
 
     private void finDuJeu(){
         System.out.println("Nombre de lignes détruites : "+cptLigne);
@@ -208,6 +259,10 @@ public class Jeu {
                 }
             }, 5000);
     }
+
+/**
+ * Lance une nouvelle pièce dans le jeu
+ */
 
     public void itsShowTime(){ // fonction du jeu
         int postvitesse;
@@ -238,6 +293,10 @@ public class Jeu {
         matrice.refresh();
         gamewindow.refresh(Points);
     }
+   
+   /**
+    * renvoit la position la plus a gauche de la piece
+    */
     
     public void gaucheGauche(){
 		int[]x=pieceEnCours.getX();
