@@ -8,6 +8,11 @@ import javax.swing.WindowConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * La classe du tetris
+ * @author  Raphaël Schimchowitsch et son fidèle assistant Maxime Schmitt
+ */
+
 class Tetris {
 
     public static void main(String[] args)

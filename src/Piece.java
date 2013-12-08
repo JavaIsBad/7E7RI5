@@ -102,12 +102,28 @@ public abstract class Piece{
 	 */	
 	public abstract int getrotation();
 	
+	/** 
+	 * Renvoit vrai si la pièce est en collision dans le jeu sans qu'elle soit elle même dans le jeu
+	 * @param game La matrice de jeu
+	 * @return true si elle est en collision, false sinon
+	 */
+	
 	public boolean collision(int [][] game){
         boolean colli=false;
         for(int i=0; !colli && i< x.length; i++)
             colli= colli || x[i]>=game.length || x[i]<0 || y[i]>=game[0].length || y[i]<0 || game[x[i]][y[i]] != 0;
         return colli;
     }
+    
+    /**
+     * Place la pièce dans le jeu sans se soucier du jeu
+     * @param x2 La coordonnée de la position la plus a gauche (du carré le plus bas)
+     * @param y2 La coordonnée de la position le plus en bas
+     * @param rotate La rotation dans laquel la pièce doit être placé
+     * @param game La matrice de jeu
+     * @param value La valeur a placer dans la matrice
+     * @return true si la piece a été positionné, false sinon
+     */
     
 	public boolean placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise( int x2, int y2, int rotate, int[][] game, int value){ //value => 0=plus là, 1=là
 		reinit();
@@ -144,6 +160,15 @@ public abstract class Piece{
 		return true;
 	}
 	
+	/**
+     * Test si la pièce peut arriver à sa position dans le jeu
+     * @param x2 La coordonnée de la position la plus a gauche (du carré le plus bas)
+     * @param y2 La coordonnée de la position le plus en bas
+     * @param rotate La rotation dans laquel la pièce doit être placé
+     * @param game La matrice de jeu
+     * @return true si la piece peut y arriver, false sinon
+     */
+    
 	public boolean peuxArriverOuIlVeut(int x2, int y2, int rotate, int[][] game){
 		reinit();
 		if (collision(game)){

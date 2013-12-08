@@ -7,18 +7,36 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+ * La fenêtre de jeu
+ * @author Maxime Schmitt et son fidèle assistant Raphaël Schimchowitsch
+ */
+
 public class GameWindow extends JPanel {
+	/// Vrai si gameover
 	private boolean gameover=false;
+	/// Le score à afficher
 	private int score=0;
+	/// La taille du texte
 	final int textArea=160;
-    final int taillex=320, tailley=500; //320 500
+	/// La taille de la fenetre de jeu en x et y
+    final int taillex=320, tailley=500;
+    /// La position du texte en y
     final int textYpos=tailley/2;
+    /// La taille des cubes de tetris
     final int taillecarrex=taillex/10, taillecarrey=tailley/20;
+    /// Les bords pour faire cool
     final int bords=taillecarrex;
+    /// Une image de fond pour faire beau
     BufferedImage background=null, piece=null;
+    /// Une matrice à afficher
     private Matrice matrice;
+    /// Une image qui ne sert à rien
     private BufferedImage img;
 
+	/**
+	 * Peind la fenêtre de jeu
+	 */
     public void paint(Graphics g)
     { int x,y;
         int posx, posy=bords;
@@ -53,16 +71,30 @@ public class GameWindow extends JPanel {
 		}
     }
 
+	/**
+	 * Demande de rafraichire la fenêtre de jeu
+	 * @param score Le score qu'on veut afficher
+	 */
+	
     public void refresh(int score)
     {
 		this.score=score;
         repaint(getVisibleRect());
     }
+    
+    /**
+     * Quand gameOver
+     */
 
 	public void gameOver(){
 		gameover=true;
 		repaint(getVisibleRect());
 	}
+	
+	/**
+	 * Constructeur de Gamewindow
+	 * @param m La matrice qu'on veut afficher
+	 */
 	
     public GameWindow(Matrice m)
     {

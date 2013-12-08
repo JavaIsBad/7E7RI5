@@ -455,32 +455,45 @@ public class SurfaceIa{
 	
 	
 	private static void parDefaut(int[]retour, Piece piece, int[][] game){
-		int maxRotate=piece.getrotation();
-		int troumin=game.length*game[0].length+1; // init au max des trous
-		int hauteurmax=hauteurMax(game);
-		for (int i=0;i<game.length;i++){
-			for (int j=0; j<maxRotate; j++){
-				int positionPlusBas=plusbasDansColonne(i,game);
-				if(piece.peuxArriverOuIlVeut(i, positionPlusBas, j, game)){
-						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1);
-						int comptertrou=compter_trou(game);
-						if (troumin>comptertrou){
-							retour[0]=i;
-							retour[1]=j;
-							hauteurmax=hauteurMax(game);
-						}
-						else if (troumin==comptertrou){
-							if (hauteurMax(game)<hauteurmax){
-								retour[0]=i;
-								retour[1]=j;
-								hauteurmax=hauteurMax(game);
-							}
-						}
-						piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,0);
-				}
-			}
-		}
-	}
+	   int maxRotate=piece.getrotation();
+	   int troumin=game.length*game[0].length+1; // init au max des trous
+	   int hauteurmax=hauteurMax(game);
+	   int test=0;
+	   int subi=-1;
+	   int subj=-1;
+	   for (int i=0;i<game.length;i++){
+		   for (int j=0; j<maxRotate; j++){
+			   int positionPlusBas=plusbasDansColonne(i,game);
+			   if(piece.peuxArriverOuIlVeut(i, positionPlusBas, j, game)){
+				   piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,1);
+				   int comptertrou=compter_trou(game);
+				   int ligne=compte_lignes_finies(game);
+				   if (ligne>test){ //Si tu peux faire des lignes, tu les fais et tu prends le plus grand nbre de ligne
+						   test=ligne;
+						   subi=i;
+						   subj=j;
+				   }
+				   else if (troumin>comptertrou){
+						   retour[0]=i;
+						   retour[1]=j;
+						   hauteurmax=hauteurMax(game);
+				   }
+				   else if (troumin==comptertrou){
+						   if (hauteurMax(game)<hauteurmax){
+								   retour[0]=i;
+								   retour[1]=j;
+								   hauteurmax=hauteurMax(game);
+						   }
+				   }
+				   piece.placerPieceAUnEndroitDonneDansLeJeuAvecUneRotationPrecise(i,positionPlusBas,j,game,0);
+			   }
+		   }
+	   }
+	   if (subi!=-1){
+			   retour[0]=subi;
+			   retour[1]=subj;
+	   }
+   }
 	
 	private static int calculerCoutPourPattern(int[] tabdepattern, int piecenbr, Piece piece, int [][]game){
 		int casseleplus=-1;
