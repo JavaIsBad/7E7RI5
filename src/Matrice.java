@@ -6,7 +6,7 @@ import java.rmi.RemoteException ;
  */
 
 class Matrice extends UnicastRemoteObject implements MatriceInterface {
-	///La matrice vue par l'IA
+    ///La matrice vue par l'IA
     int matrice_IA[][];
     /// La matrice de jeu
     int matrice[][];
@@ -19,10 +19,10 @@ class Matrice extends UnicastRemoteObject implements MatriceInterface {
     /// Si refrash de matrice_IA est a true
     private boolean is_busy;
 
-	/**
-	 * Constructeur de matrice
-	 */
-	 
+    /**
+     * Constructeur de matrice
+     */
+
     public Matrice() throws RemoteException
     {
         super();
@@ -32,36 +32,36 @@ class Matrice extends UnicastRemoteObject implements MatriceInterface {
         sizeX=10;
         sizeY=20;
     }
-    
+
     /**
      * Renvoit la position la plus a gauche de la piece en cours
      * @return Le plus à gauche de la piece en cours
      */
-    
+
     public int getGauche() throws RemoteException{
-		return positionGauche;
-	}
-    
-        
+        return positionGauche;
+    }
+
+
     /**
      * Renvoit la position la plus en bas a gauche de la piece en cours
      * @return Les coordonnées x et y
      */
 
     public int[] get_coord() throws RemoteException{
-		return positionPiece;
-	}
+        return positionPiece;
+    }
 
-	/**
-	 * Renvoit la matrice de jeu
-	 * @return La matrice de jeu
-	 */
+    /**
+     * Renvoit la matrice de jeu
+     * @return La matrice de jeu
+     */
 
     public int[][] get_matrice() throws RemoteException {
         if (is_busy) return null;
         return matrice_IA;
     }
-    
+
     /**
      * Rafraichit la matrice_IA
      */
@@ -72,36 +72,36 @@ class Matrice extends UnicastRemoteObject implements MatriceInterface {
         for (y=0;y<20;y++) for (x=0;x<10;x++) matrice_IA[x][y] = matrice[x][y];
         is_busy = false;
     }
-	
-	/**
-	 * Inscrit une valeur dans la matrice
-	 * @param x La coordonnée
-	 * @param y La deuxieme coordonnée
-	 * @param v La Valeure
-	 */
-	
+
+    /**
+     * Inscrit une valeur dans la matrice
+     * @param x La coordonnée
+     * @param y La deuxieme coordonnée
+     * @param v La Valeure
+     */
+
     public void put(int x,int y,int v)
     {
         matrice[x][y] = v;
     }
-	/**
-	 * Recoit une valeur de la matrice
-	 * @param x La coordonnée
-	 * @param y La deuxieme coordonnée
-	 * @return La valeur a la position x,y
-	 */
+    /**
+     * Recoit une valeur de la matrice
+     * @param x La coordonnée
+     * @param y La deuxieme coordonnée
+     * @return La valeur a la position x,y
+     */
 
     public int get(int x,int y)
     {
         return matrice[x][y];
     }
-    
-	/**
-	 * Test si quelque chose se trouve à cet endroit de la matrice
-	 * @param x La coordonnée
-	 * @param y La deuxieme coordonnée
-	 * @return Vrai si quelque chose s'y trouve
-	 */
+
+    /**
+     * Test si quelque chose se trouve à cet endroit de la matrice
+     * @param x La coordonnée
+     * @param y La deuxieme coordonnée
+     * @return Vrai si quelque chose s'y trouve
+     */
 
     public boolean isSomething(int x, int y){
         boolean b=false;

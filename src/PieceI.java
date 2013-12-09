@@ -16,10 +16,10 @@ public class PieceI extends Piece{
     ///Le nombre maximum de rotation de la pièce
     public int maxRotation=2;
 
-/**
- * Constructeur de PieceI
- * @param sizeX, le nombre de colonne de la matrice
- */
+    /**
+     * Constructeur de PieceI
+     * @param sizeX, le nombre de colonne de la matrice
+     */
     public PieceI(int sizex){ // la piece est en haut
         xMid=new int[4];
         yMid=new int[4];
@@ -29,18 +29,18 @@ public class PieceI extends Piece{
         rotation=0;
     }
 
-/**
- * Réinitialise les coordonnées de la pièce comme elles sont lors de son apparition
- */
+    /**
+     * Réinitialise les coordonnées de la pièce comme elles sont lors de son apparition
+     */
     public void reinit(){
         super.reinit();
         rotation=0;
     }
 
-/**
-   * Initialise la position de la Piece
-   * @param sizex, le nombre de colonne de la matrice
-   */
+    /**
+     * Initialise la position de la Piece
+     * @param sizex, le nombre de colonne de la matrice
+     */
     private void initPosition(int sizex){
         int mid= sizex/2;
         xMid[0]=mid;
@@ -53,9 +53,9 @@ public class PieceI extends Piece{
         yMid[3]=0;
     }
 
-/**
- * Effectue la rotation de la piece vers la gauche
- */
+    /**
+     * Effectue la rotation de la piece vers la gauche
+     */
     public void rotationner(){
         if(rotation==0){ // déjà en position de rotation
             x[1]+=1;
@@ -77,41 +77,41 @@ public class PieceI extends Piece{
         }
     }
 
-/**
- * Effectue la rotation vers la droite de la piece
- */
+    /**
+     * Effectue la rotation vers la droite de la piece
+     */
     public void antirotation(){
         rotationner(); // ici il suffit de faire une rotation pour revenir aux positions de départ
     }
-    
+
     /**
      * Renvoie le nombre maximum de rotation de la piece
      *@return le nombre maximale de rotation d'une piece
      */
     public int getrotation(){
-		return maxRotation;
-	}
-	
-	/**
-	 * Regarde si la piece est une PieceI
-	 * @param x, la colonne de la case la plus en bas a gauche de la piece
-	 * @param y, la ligne de la case la plus en bas a gauche de la piece
-	 * @param game, le jeu dans lequel on se trouve
-	 * @param tab, tableau dans lequel on trouve la piece et la rotation
-	 */
-	public static void isMe(int x, int y, int[][] game ,int[] tab){
-		if(x+3 <game.length  && game[x][y]!=0 && game[x+1][y]!=0 && game[x+2][y]!=0 && game[x+3][y]!=0){
-			tab[0]=7;
-			tab[1]=0;
-		}
-		else{
-			if(y-3>=0 && game[x][y]!=0 && game[x][y-1]!=0 && game[x][y-2]!=0 && game[x][y-3]!=0){
-				tab[0]=7;
-				tab[1]=1;
-			}
-			else{
-				tab[0]=0;
-			}
-		}
-	}
+        return maxRotation;
+    }
+
+    /**
+     * Regarde si la piece est une PieceI
+     * @param x, la colonne de la case la plus en bas a gauche de la piece
+     * @param y, la ligne de la case la plus en bas a gauche de la piece
+     * @param game, le jeu dans lequel on se trouve
+     * @param tab, tableau dans lequel on trouve la piece et la rotation
+     */
+    public static void isMe(int x, int y, int[][] game ,int[] tab){
+        if(x+3 <game.length  && game[x][y]!=0 && game[x+1][y]!=0 && game[x+2][y]!=0 && game[x+3][y]!=0){
+            tab[0]=7;
+            tab[1]=0;
+        }
+        else{
+            if(y-3>=0 && game[x][y]!=0 && game[x][y-1]!=0 && game[x][y-2]!=0 && game[x][y-3]!=0){
+                tab[0]=7;
+                tab[1]=1;
+            }
+            else{
+                tab[0]=0;
+            }
+        }
+    }
 }

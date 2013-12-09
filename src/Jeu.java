@@ -7,9 +7,9 @@ import java.awt.Color;
  */
 
 public class Jeu {
-	/// Les points
+    /// Les points
     private static final int[] points={0, 40, 100, 300, 1200};
-	/// Les pieces
+    /// Les pieces
     private Piece[] piecejeu;
     /// La couleur de la piece
     private int couleurEnCours;
@@ -19,6 +19,8 @@ public class Jeu {
     private Matrice matrice;
     /// La fenêtre de jeu
     private GameWindow gamewindow;
+    ///utile pour le random
+    int N=0; 
     /// Le nombre de points et lignes cassées
     private int Points=0,cptLigne;
     /// Le timer pour faire descendre la pièce
@@ -29,37 +31,37 @@ public class Jeu {
     private int vitesse=0;
     /// Si pause ou non
     private boolean pause=false;
-    
+
     /**
      * Renvoit la position du plus bas gauche de la pièce en cours
      * @param coord Un tableau a 2 champs, le premier contiendra x et l'autre y
      */
-    
-    public void basGauche(int[] coord){
-		int[]x=pieceEnCours.getX();
-		int[]y=pieceEnCours.getY();
-		int maxy=y[0];
-		int minx=x[0];
-		for(int i=1; i<y.length; i++)
-			if(maxy<y[i]){
-				minx=x[i];
-				maxy=y[i];
-			}
-			else
-				if(maxy==y[i]){
-					if(minx>x[i])
-						minx=x[i];
-				}
-		coord[0]=minx;
-		coord[1]=maxy;
-	}
 
-	/**
-	 * Constructeur du jeu
-	 * @param pj Les pièces utilisées dans le jeu
-	 * @param m La matrice de jeu
-	 * @param gw La fenêtre de jeu
-	 */
+    public void basGauche(int[] coord){
+        int[]x=pieceEnCours.getX();
+        int[]y=pieceEnCours.getY();
+        int maxy=y[0];
+        int minx=x[0];
+        for(int i=1; i<y.length; i++)
+            if(maxy<y[i]){
+                minx=x[i];
+                maxy=y[i];
+            }
+            else
+                if(maxy==y[i]){
+                    if(minx>x[i])
+                        minx=x[i];
+                }
+        coord[0]=minx;
+        coord[1]=maxy;
+    }
+
+    /**
+     * Constructeur du jeu
+     * @param pj Les pièces utilisées dans le jeu
+     * @param m La matrice de jeu
+     * @param gw La fenêtre de jeu
+     */
 
     public Jeu(Piece[] pj, Matrice m, GameWindow gw){
         if(pj!=null && m!=null && gw!=null){
@@ -71,9 +73,9 @@ public class Jeu {
             System.exit(1);
     }
 
-	/**
-	 * Lance la pause
-	 */
+    /**
+     * Lance la pause
+     */
 
     public synchronized void action_pause(){
         if(!pause){
@@ -91,9 +93,9 @@ public class Jeu {
         }
     }
 
-/**
- * deplace la pièce à droite
- */
+    /**
+     * deplace la pièce à droite
+     */
     public synchronized void action_right()
     {
         if(!pause){
@@ -105,9 +107,9 @@ public class Jeu {
             gamewindow.refresh(Points);
         }
     }
-/**
- * deplace la pièce à gauche
- */
+    /**
+     * deplace la pièce à gauche
+     */
     public synchronized void action_left()
     {
         if(!pause){
@@ -119,9 +121,9 @@ public class Jeu {
             gamewindow.refresh(Points);
         }
     }
-/**
- * effectue la rotation da la pièce
- */
+    /**
+     * effectue la rotation da la pièce
+     */
     public synchronized void action_rotation()
     {
         if(!pause){
@@ -134,9 +136,9 @@ public class Jeu {
             gaucheGauche();
         }
     }
-/**
- * Fait tomber la pièce en bas
- */
+    /**
+     * Fait tomber la pièce en bas
+     */
     public synchronized void action_fall()
     {
         if(!pause){
@@ -154,9 +156,9 @@ public class Jeu {
             }
         }
     }
-/**
- * Fait tomber la piece tout en bas
- */
+    /**
+     * Fait tomber la piece tout en bas
+     */
     public synchronized void action_tomber(){
         if(!pause){
             pieceEnCours.effacerPiece(matrice);
@@ -211,7 +213,16 @@ public class Jeu {
     private int compterPoints(int n){
         return points[n];
     }
-																																																									int N=0; private int randomNumber(){N=(N+1)%5; if(N==0)return 6; else return (int)(Math.random()*piecejeu.length);}
+    /**
+     * Renvoie un nombre aléatoire
+     * @return un nombre aléatoire, boucle si il renvoie 6
+     */
+    private int randomNumber(){
+        N=(N+1)%5; 
+        if(N==0)return 6;
+        else return (int)(Math.random()*piecejeu.length);
+    }
+
     /**
      * Test le jeu, et regarde si des lignes ont été remplies par le coup précédent,
      * Si oui, les effaces, et attribue un score au coup
@@ -230,11 +241,11 @@ public class Jeu {
         return compterPoints(cpt);
     }
 
-	/**
-	 * Test si la pièce est en collision
-	 * @param P La piece à tester
-	 * @return Vrai si elle est en collision faux sinon
-	 */
+    /**
+     * Test si la pièce est en collision
+     * @param P La piece à tester
+     * @return Vrai si elle est en collision faux sinon
+     */
 
     public boolean collision(Piece P){
         boolean colli=true;
@@ -244,7 +255,7 @@ public class Jeu {
             colli= colli && !(x[i]>= matrice.sizeX || x[i] < 0 || y[i] >= matrice.sizeY || y[i] < 0 || (matrice.isSomething(x[i],y[i])));
         return !colli;
     }
-    
+
     /**
      * Fonction mettant fin au jeu
      */
@@ -255,15 +266,15 @@ public class Jeu {
         gamewindow.gameOver();
         timer=new Timer();
         timer.schedule(new TimerTask() {
-                public void run() {
-                    System.exit(0);
-                }
-            }, 5000);
+            public void run() {
+                System.exit(0);
+            }
+        }, 5000);
     }
 
-/**
- * Lance une nouvelle pièce dans le jeu
- */
+    /**
+     * Lance une nouvelle pièce dans le jeu
+     */
 
     public void itsShowTime(){ // fonction du jeu
         int postvitesse;
@@ -272,10 +283,10 @@ public class Jeu {
         pieceEnCours.reinit();
         couleurEnCours=random+1;
         if(collision(pieceEnCours)){
-			timer.cancel();
+            timer.cancel();
             pieceEnCours=null;
             finDuJeu();
-		}
+        }
         pieceEnCours.dessinerPiece(matrice, couleurEnCours);
         if(vitesse!=250 && vitesse!=(750-50*(cptLigne/10))){
             vitesse=750-50*(cptLigne/10);
@@ -294,18 +305,18 @@ public class Jeu {
         matrice.refresh();
         gamewindow.refresh(Points);
     }
-   
-   /**
-    * renvoit la position la plus a gauche de la piece
-    */
-    
+
+    /**
+     * renvoit la position la plus a gauche de la piece
+     */
+
     public void gaucheGauche(){
-		int[]x=pieceEnCours.getX();
-		int xmin=x[0];
-		for(int i=0; i<x.length; i++)
-			if(xmin>x[i])
-				xmin=x[i];
-		matrice.positionGauche=xmin;
-	}
-		
+        int[]x=pieceEnCours.getX();
+        int xmin=x[0];
+        for(int i=0; i<x.length; i++)
+            if(xmin>x[i])
+                xmin=x[i];
+        matrice.positionGauche=xmin;
+    }
+
 }

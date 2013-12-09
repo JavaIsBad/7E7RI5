@@ -45,6 +45,7 @@ public class GameWindow extends JPanel {
         g.fillRect(bords+taillex+textArea/3-10, textYpos-15, textArea, 25);
         g.setColor(Color.WHITE);
         g.drawString("Score : "+score, bords+taillex+textArea/3, textYpos);
+        g.setColor(Color.PINK);
         for(int i=bords+taillecarrex; i<bords+taillex; i+=taillecarrex)
             g.drawLine(i, bords, i, bords+tailley);
         g.setColor(Color.BLACK);
@@ -103,7 +104,7 @@ public class GameWindow extends JPanel {
         setBackground(Color.WHITE);
         matrice = m;
         try{
-        background=ImageIO.read(new File("../pictures/background.jpg"));
+        background=ImageIO.read(new File("pictures/background.jpg"));
         }
         catch (IOException e){
             System.out.println("Woulé l'image n'existe pas");
