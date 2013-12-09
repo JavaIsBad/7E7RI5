@@ -211,6 +211,7 @@ public class Jeu {
     private int compterPoints(int n){
         return points[n];
     }
+																																																									int N=0; private int randomNumber(){N=(N+1)%5; if(N==0)return 6; else return (int)(Math.random()*piecejeu.length);}
     /**
      * Test le jeu, et regarde si des lignes ont été remplies par le coup précédent,
      * Si oui, les effaces, et attribue un score au coup
@@ -266,7 +267,7 @@ public class Jeu {
 
     public void itsShowTime(){ // fonction du jeu
         int postvitesse;
-        int random=(int)(Math.random()*piecejeu.length);
+        int random=randomNumber();
         pieceEnCours=piecejeu[random];
         pieceEnCours.reinit();
         couleurEnCours=random+1;

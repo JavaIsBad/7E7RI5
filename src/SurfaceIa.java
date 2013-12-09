@@ -727,9 +727,9 @@ public class SurfaceIa{
 		int i=0;
 		int moyenneDuJeu=hauteurMoyenne(game)+5; // +3 pour compenser si tout le jeu est a la même hauteur np <===== ++--***##IMPORTANT##***--++ remettre hauteurMoyenne(game)+3 quand fini test
 		while(i<tabdepattern.length){ // on vire les patterns qui font trop monter le jeu
-			if(tabdepattern[i]>0 // si pattern valide
+			if(tabdepattern[i]<0 // si pattern valide
 			//&& hauteurColonne(game,i)>=moyenneDuJeu // et pas trop haut
-			&& !piece.peuxArriverOuIlVeut(i, plusbasDansColonne(i,game) , rotationPourPattern(pieceNumber, tabdepattern[i]), game) // et qu'on peut placer la pièce 
+			//&& !piece.peuxArriverOuIlVeut(i, plusbasDansColonne(i,game) , rotationPourPattern(pieceNumber, tabdepattern[i]), game) // et qu'on peut placer la pièce 
 			){
 				tabdepattern[i]=-1;
 			}
